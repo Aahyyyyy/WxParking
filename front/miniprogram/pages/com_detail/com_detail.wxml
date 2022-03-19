@@ -1,0 +1,36 @@
+<map  style="width:100%;height:300px;" scale="17.5" enable-satellite="true"
+      longitude="{{com[0].lng}}"  latitude="{{com[0].lat}}"
+      markers="{{buildingMarker}}" bindmarkertap = "markertap">
+</map>
+<view class="name_row"  >
+  <view class="name">{{ com[0].cname }}</view>
+  <image class="cuxiao_icon" mode='widthFix' src="../../images/Icon/src_assets_community_cuxiao.png"> </image>
+</view>
+<view class="car_info_high">
+   <text class="info1">本次活动共推出{{parking_count[0].parkingsum}}车位</text>
+   <view class="car_info"> 
+     <view class="car_info_part1">
+      <view class="asold_num">{{parking_count[0].sold}}</view>
+      <text>已售车位</text>
+     </view>
+     <view class="car_info_part2">
+      <view class="aselling_num">{{parking_count[0].parkingsum-parking_count[0].sold}}</view>
+      <text>未售车位</text>
+     </view>
+     <view class="car_info_part2">
+      <view class="areserved_num">{{parking_count[0].reserved}}</view>
+      <text>已定车位</text>
+     </view>
+   </view>
+</view>
+<view class="price_wrap">
+  车位售价：<text class="price">{{parking_count[0].minPrice}}~{{parking_count[0].maxPrice}}</text>
+</view>
+<view class="info">
+  <view>开发商：{{com[0].Dname}}</view>
+  <view>地址:{{com[0].caddress}}</view>
+  <view>车位总数：{{parking_count[0].parkingsum}}</view>
+  <view>已售车位：{{parking_count[0].sold}}</view>
+  <view>平均价格：{{parking_count[0].avgPrice}}</view>
+</view>
+

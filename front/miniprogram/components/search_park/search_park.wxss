@@ -1,0 +1,33 @@
+.search {
+  display: flex;
+  height: 90rpx;
+  padding: 10rpx;
+}
+.search navigator {
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  border-radius: 15rpx;
+}
+
+.img_wrap {
+flex: 0.5;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.img_wrap image {
+  width: 60%;
+  height: 30%;
+}
+
+.search_wrap {
+padding-left: 5rpx;
+flex: 3;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+}

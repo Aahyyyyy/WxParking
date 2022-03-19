@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.OwnerDao">
+    <insert id="doOwnerIden" parameterType="com.pojo.Owner">
+        insert into owner(Oacconut, Oname, Ophonenum, Oidnum, Oidauthflog, Ocertificationflog, Oaddress, Oemail, Bname)
+        values (#{Oacconut}, #{Oname}, #{Ophonenum}, null, '1', '0', #{Oaddress}, #{Oemail}, #{Bname})
+    </insert>
+
+    <update id="doOwnerCert" parameterType="com.pojo.Owner">
+        update owner
+        set Oidnum = #{Oidnum}, Ocertificationflog = '1'
+        where Oacconut = #{Oacconut} and Oname = #{Oname}
+    </update>
+
+    <update id="doOwnerCheck" parameterType="String">
+        update owner
+        set Ocertificationflog = '2'
+        where Oacconut = #{id}
+    </update>
+
+    <update id="doOwnerModify" parameterType="com.pojo.Owner">
+        update owner
+        set Ophonenum = #{Ophonenum}, Oemail = #{Oemail}, Oaddress= #{Oaddress}
+        where Oacconut = #{Oacconut} and Oname = #{Oname} and Oidnum = #{Oidnum}
+    </update>
+
+    <select id="getOname" parameterType="String" resultType="String">
+        select Oname from owner where Oacconut = #{id}
+    </select>
+
+    <select id="findOwnerById" parameterType="String" resultType="com.pojo.Owner">
+        select * from owner where Oacconut = #{id}
+    </select>
+</mapper>

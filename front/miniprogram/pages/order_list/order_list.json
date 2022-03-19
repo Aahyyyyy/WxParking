@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "tab": "../../components/tab/tab"
+  },
+  "navigationBarTitleText": "我的订单",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#191919"
+}

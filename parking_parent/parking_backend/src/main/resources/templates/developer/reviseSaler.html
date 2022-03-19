@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>车位信息批量管理</title>
+
+
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+  <!-- FooTable -->
+  <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+  <!--侧边公共部分引入-->
+  <div th:replace="~{developer/commons::siderbar(active='parking')}"></div>
+
+  <div id="page-wrapper" class="gray-bg">
+    <!--头部公共部分引入-->
+    <div th:replace="~{developer/commons::topbar}"></div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>销售公司批量管理</h5>
+              <div class="ibox-tools">
+                <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                  <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                  <li><a href="table_basic.html#">Config option 1</a>
+                  </li>
+                  <li><a href="table_basic.html#">Config option 2</a>
+                  </li>
+                </ul>
+                <a class="close-link">
+                  <i class="fa fa-times"></i>
+                </a>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <form th:action="@{/developer/queryReviseSaler}" method="post">
+                <div class="row">
+                  <div class="col-sm-3 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryCommunity">
+                    <option th:each="community:${communities}" th:value="${community.getCname()}" th:text="${community.getCname()}"></option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                  </div>
+                  <div class="col-sm-4 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryArea">
+                    <option th:each="area:${areas}" th:value="${area.getAname()}" th:text="${area.getAname()}"></option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                  </div>
+                  <div class="col-sm-4 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="querySaler">
+                    <option th:each="saler:${salers}" th:value="${saler.getSname()}" th:text="${saler.getSname()}"></option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                  </div>
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                </div>
+              </form>
+
+              <form role="form" th:action="@{/developer/reviseSalerParking}" method="post">
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>车位所在小区</th>
+                  <th>车位所在区域</th>
+                  <th>车位号 </th>
+                  <th>车位长 </th>
+                  <th>车位宽</th>
+                  <th>建筑面积</th>
+                  <th>使用面积</th>
+                  <th>销售单价</th>
+                  <th>销售价格</th>
+                  <th>销售状态</th>
+                  <th>销售公司</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="viewParkingInfo:${viewParkingInfos}">
+                  <td th:text="${viewParkingInfoStat.count}"></td>
+                  <td th:text="${viewParkingInfo.getCname()}"></td>
+                  <td th:text="${viewParkingInfo.getAname()}"></td>
+                  <td th:text="${viewParkingInfo.getPno()}"></td>
+                  <td th:text="${viewParkingInfo.getPlength()}"></td>
+                  <td th:text="${viewParkingInfo.getPwide()}"></td>
+                  <td th:text="${viewParkingInfo.getPbuildarra()}"></td>
+                  <td th:text="${viewParkingInfo.getPusearea()}"></td>
+                  <td th:text="${viewParkingInfo.getPsalernuitprice()}"></td>
+                  <td th:text="${viewParkingInfo.getPsalerprice()}"></td>
+                  <td th:text="${viewParkingInfo.getPstatus()}"></td>
+                  <td th:text="${viewParkingInfo.getSname()}"></td>
+                  <td>
+<!--                    多选框-->
+                      <input type="checkbox"  name="parkingList"
+                             th:value="${viewParkingInfo.getPno()}" th:text="${viewParkingInfo.getPno()}" >
+
+                  </td>
+                </tr>
+                </tbody>
+
+              </table>
+
+                <div class="form-group">
+                  <strong>销售公司</strong>
+                  <select class="form-control m-b" name="reviseSalerName">
+                    <option th:each="saler:${salers}" th:value="${saler.getSname()}" th:text="${saler.getSname()}"></option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                </div>
+
+                <button type="submit"   class="btn btn-primary col-lg-12" >修改销售公司</button>&nbsp;
+              </form>
+            </div>
+
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div th:replace="~{commons/commons::footer}"></div>
+
+  </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+  $(document).ready(function() {
+    //全选
+    $("#checkAll").click(function() {
+      if($(this).prop("checked")){
+        $('input[name="subBox"]').prop("checked",true);
+      }else{
+        $('input[name="subBox"]').prop("checked",false);
+      }
+    });
+    //or
+    var isChecked = $(this).prop("checked");
+    $("input[name='subBox']").prop("checked", isChecked);
+  });
+
+  function openVerifyModal(obj) {
+    var $td = $(obj).parents('tr').children('td');
+    // console.log($(obj));
+    var Te_Id = $td.eq(1).text();
+    $("#te_id").val(Te_Id);
+  }
+
+
+
+</script>
+
+</body>
+
+</html>

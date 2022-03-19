@@ -1,0 +1,114 @@
+page {
+    background-color: #f3f4f4
+}
+
+.head_wrap {
+    height: 15vh;
+    position: relative;
+    background-color: #FACC31;
+}
+
+.content_wrap {
+    position: relative;
+}
+
+.order_wrap {
+    left: 46%;
+    top: -170rpx;
+    display: flex;
+    position: absolute;
+    transform: translateX(-50%);
+    
+    width: 92%;
+    height: 19vh;
+    border-radius: 10rpx;
+    background-color: #fff;
+    margin: 5px 0rpx 50rpx 25rpx;
+}
+
+.left_wrap {
+    width: 21%;
+    height: 60%;
+    
+    color: #191919;
+    font-size: 34rpx;
+    font-weight: bold;
+    
+    flex: 1;
+    display: inline;
+    padding-top: 8%;
+    border-radius: 10px;
+    margin: 10px 20px 5px 10px;
+    background: linear-gradient(to top, #FACC31, rgb(255, 252, 94))
+}
+
+.left_line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.right_wrap {
+    flex: 2.2;
+    display: inline;
+    padding-top: 3%;
+}
+
+.right_line {
+    display: flex;
+    line-height: 16px;
+    flex-direction: row;
+    justify-content:first baseline;
+}
+
+.info_price {
+    margin-top: 5px;
+    color: red;
+    font-weight: bold;
+    font-size: 36rpx;
+}
+
+.detail_wrap {
+    left: 46%;
+    top: 60px;
+    display: inline;
+    position: absolute;
+    transform: translateX(-50%);
+    
+    width: 92%;
+    height: auto;
+    border-radius: 10rpx;
+    background-color: #fff;
+    margin: 5px 0rpx 50rpx 25rpx;
+}
+
+.detail_line {
+    width: 92%;
+    display: flex;
+    line-height: 45px;
+    margin: 0 0 0 10px;
+    border-top: 1px solid rgb(231, 231, 231);
+}
+
+.right {
+    margin-left: 10px;
+}
+
+.btn_wrap {
+    left: 50%;
+    top: 270px;
+    position: absolute;
+    transform: translateX(-50%);
+    
+    width: 92%;
+    height: 50px;
+}
+
+.btn_wrap button {
+    font-size: 34rpx !important;
+    width: 100% !important;
+    height: 80% !important;
+    color: #191919 !important;
+    background-color: #FACC31 !important;
+}

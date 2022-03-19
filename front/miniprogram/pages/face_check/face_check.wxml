@@ -1,0 +1,8 @@
+<view class="page-body">
+  <view class="page_wrap" style="height: {{sysWidth}};">
+    <camera device-position="front" flash="off" binderror="error" class="camera_wrap" ></camera>
+  </view>
+  <view class="btn_area">
+    <button type="primary" bindtap="takePhoto">开始认证</button>
+  </view>
+</view>

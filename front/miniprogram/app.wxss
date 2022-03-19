@@ -1,0 +1,9 @@
+page, view, text, swiper, swiper-item, image, navigator {
+  padding: 0;
+  margin: 0;
+}
+
+page {
+  --themeColor: #191919;
+  font-size: 32rpx;
+}

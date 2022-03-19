@@ -1,0 +1,37 @@
+<view class="container">
+  <view class='payTime'>
+    <view class='payTime-text'>尾款：¥{{orfinal}}</view>
+    <view class='payTime-num'>{{createOrder.data}}</view>
+  </view>
+
+  <view class="ul">
+    <view class="li" bindtap="way_choose1" data-url="/pages/my/myBankCard/index">
+      <view class="left">
+        <image src="../../images/Icon/tx01.png" mode="widthFix" style="width:25px;"></image>
+        <text>全款支付</text>
+      </view>
+      <view class="right">
+        <image class="arrIcon" src="../../images/Icon/zy01.png"></image>
+      </view>
+    </view>
+    <view class="li" bindtap="way_choose2" data-url="/pages/my/commission/index">
+      <view class="left">
+        <image src="../../images/Icon/qianbao.png" mode="widthFix" style="width:25px;"></image>
+        <text>分期支付</text>
+      </view>
+      <view class="right">
+        <image class="arrIcon" src="../../images/Icon/zy01.png"></image>
+      </view>
+    </view>
+    <view class="li" bindtap="way_choose3" data-url="/pages/my/record/index">
+      <view class="left">
+        <image src="../../images/Icon/yhk01.png" mode="widthFix" style="width:25px;"></image>
+        <text>按揭支付</text>
+      </view>
+      <view class="right">
+        <image class="arrIcon" src="../../images/Icon/zy01.png"></image>
+      </view>
+    </view>
+  </view>
+
+</view>

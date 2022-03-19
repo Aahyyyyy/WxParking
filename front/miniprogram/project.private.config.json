@@ -1,0 +1,30 @@
+{
+    "setting": {},
+    "condition": {
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "pages/identity/identity",
+                    "pathName": "pages/identity/identity",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/park_list/park_list",
+                    "pathName": "pages/park_list/park_list",
+                    "query": "bno=1&cno=1",
+                    "scene": null
+                }
+            ]
+        }
+    }
+}

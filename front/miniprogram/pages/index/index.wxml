@@ -1,0 +1,153 @@
+<view class="park_index">
+  <search bind:backDataTap="city_back"></search>
+  <view class="index_swiper">
+    <swiper autoplay="true" circular="true" indicator-dots="true" indicator-color="#191919" indicator-active-color="#FACC31">
+      <swiper-item wx:for="{{swiperList}}" wx:key="image_id">
+        <navigator>
+          <image mode="widthFix" src="{{item.image_src}}"></image>
+        </navigator>
+      </swiper-item>
+    </swiper>
+    <view>{{address}}</view>
+  </view>
+  <view class="navi_wrap">
+      <navigator class="navi_item" url="../com_list/com_list" hover-class="none">
+        <image mode="widthFix" class="navi_icon" src="../../images/Icon/car.png"></image>
+        <view class="navi_name">购买车位</view>
+      </navigator>
+      <navigator class="navi_item"  hover-class="none">
+        <image mode="widthFix" class="navi_icon" src="../../images/Icon/huo.png"></image>
+        <view class="navi_name">精彩活动</view>
+      </navigator>
+      <navigator open-type="switchTab" url="../city/city" class="navi_item" hover-class="none"> 
+        <image mode="widthFix" class="navi_icon" src="../../images/Icon/map.png"></image>
+        <view class="navi_name">车位地图</view>
+      </navigator>
+      <view class="navi_item" bindtap="isIden">
+        <image mode="widthFix" class="navi_icon" src="../../images/Icon/iden.png"></image>
+        <view class="navi_name">身份认证</view>
+      </view>
+  </view>
+  <view class="acti_wrap">
+    <navigator style="background-color: rgb(243, 243, 243);"  hover-class="none">
+      <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/activity.png"></image>
+    </navigator>
+  </view>
+  
+  <tab tabList="{{tabList}}" bindtabsItemChange="handleTabsItemChange">
+    <block wx:if="{{tabList[0].isActive}}">
+      <view class="com_wrap" >
+        <view class="side_wrap">
+          <view class="left_com_item" wx:for="{{comList}}" wx:key="id" 
+                wx:if="{{index % 2 == 0 && item.city == currentCity}}">
+            <navigator bindtap="more_detail"style="width: 100%; height: auto;"
+                       data-com_Id="{{item.cno}}" data-id="{{item.id}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="side_wrap">
+          <view class="right_com_item" wx:for="{{comList}}" wx:key="Cno" 
+                wx:if="{{index % 2 == 1 && item.city == currentCity}}">
+            <navigator data-id="{{item.id}}" bindtap="more_detail" data-com_Id="{{item.cno}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:if="{{tabList[1].isActive}}">
+      <view class="com_wrap" >
+        <view class="side_wrap">
+          <view class="left_com_item" wx:for="{{comList}}" wx:key="id" 
+                wx:if="{{index % 2 == 0 && item.city == currentCity}}">
+            <navigator bindtap="more_detail"style="width: 100%; height: auto;"
+                       data-com_Id="{{item.cno}}" data-id="{{item.id}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="side_wrap">
+          <view class="right_com_item" wx:for="{{comList}}" wx:key="Cno" 
+                wx:if="{{index % 2 == 1 && item.city == currentCity}}">
+            <navigator data-id="{{item.id}}" bindtap="more_detail" data-com_Id="{{item.cno}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:if="{{tabList[2].isActive}}">
+      <view class="com_wrap" >
+        <view class="side_wrap">
+          <view class="left_com_item" wx:for="{{comList}}" wx:key="id" 
+                wx:if="{{index % 2 == 0 && item.city == currentCity}}">
+            <navigator bindtap="more_detail"style="width: 100%; height: auto;"
+                       data-com_Id="{{item.cno}}" data-id="{{item.id}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+        <view class="side_wrap">
+          <view class="right_com_item" wx:for="{{comList}}" wx:key="Cno" 
+                wx:if="{{index % 2 == 1 && item.city == currentCity}}">
+            <navigator data-id="{{item.id}}" bindtap="more_detail" data-com_Id="{{item.cno}}">
+              <view class="img_wrap">
+                <image mode="widthFix" src="http://r35lytik8.hd-bkt.clouddn.com/image/banner1.jpg"></image>
+              </view>
+              <view class="info_wrap">
+                <view class="com_name">{{item.cname}}</view>
+                <view class="com_name"  wx:if="{{show_status == 1}}">均价：{{item.avgPrice}}元</view>
+                <view class="com_name" wx:if="{{show_status == 0}}">距离：{{item.distance}}m</view>
+                <view class="com_addr">{{item.caddress}}</view>
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+  </tab>
+</view>

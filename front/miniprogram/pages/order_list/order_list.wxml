@@ -1,0 +1,191 @@
+<tab tabList="{{tabList}}" bindtabsItemChange="handleTabsItemChange">
+    <block wx:if="{{tabList[0].isActive}}">
+      <view class="order_item" wx:for="{{orderList}}">
+        <view class="top_line" data-orno="{{item.orno}}" bindtap="toDetail">
+          下单时间: {{item.ordate}}
+        </view>
+        <view class="info_wrap" data-orno="{{item.orno}}" bindtap="toDetail">
+          <view class="left_wrap">
+            <view class="line1">{{item.cname}}</view>
+            <view class="line">
+              区域：{{item.aname}}
+              <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+              车位号：{{item.pno}}
+            </view>
+            <view class="line">开发商：{{item.dname}}</view>
+            <view class="line2">
+              建筑面积：{{item.pbuildarra}}㎡
+              <text decode="true">&nbsp;</text>
+              使用面积：{{item.pusearea}}㎡
+            </view>
+          </view>
+          <view class="right_wrap">
+            <view wx:if="{{item.orstatue == '0'}}">未交预约金</view>
+            <view wx:elif="{{item.orstatue == '1'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>已预约
+            </view>
+            <view wx:elif="{{item.orstatue == '2'}}">
+              <text decode="true">&nbsp;</text>未交定金
+            </view>
+            <view wx:elif="{{item.orstatue == '3'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>待签约
+            </view>
+            <view wx:elif="{{item.orstatue == '4'}}">
+              <text decode="true">&nbsp;</text>未交尾款
+            </view>
+            <view wx:elif="{{item.orstatue == '5'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>已完成
+            </view>
+          </view>
+        </view>
+        <view class="bottom_line">
+          车位价格：<view class="info_price">{{item.psalernuitprice}}元</view>
+          <view class="cancel"><view data-orno="{{item.orno}}" bindtap="deleteOrder">取消订单</view></view>
+          <view class="goto"><view data-orno="{{item.orno}}" bindtap="toDetail">查看详情</view></view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:elif="{{tabList[1].isActive}}">
+      <view class="order_item" wx:for="{{orderList}}" wx:if="{{item.orstatue == '1'}}">
+        <view class="top_line" data-orno="{{item.orno}}" bindtap="toDetail">
+          下单时间: {{item.ordate}}
+        </view>
+        <view class="info_wrap" data-orno="{{item.orno}}" bindtap="toDetail">
+          <view class="left_wrap">
+            <view class="line1">{{item.cname}}</view>
+            <view class="line">
+              区域：{{item.aname}}
+              <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+              车位号：{{item.pno}}
+            </view>
+            <view class="line">开发商：{{item.dname}}</view>
+            <view class="line2">
+              建筑面积：{{item.pbuildarra}}㎡
+              <text decode="true">&nbsp;</text>
+              使用面积：{{item.pusearea}}㎡
+            </view>
+          </view>
+          <view class="right_wrap">
+            <view wx:if="{{item.orstatue == '1'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>已预约
+            </view>
+          </view>
+        </view>
+        <view class="bottom_line">
+          车位价格：<view class="info_price">{{item.psalernuitprice}}元</view>
+          <view class="cancel"><view data-orno="{{item.orno}}" bindtap="deleteOrder">取消订单</view></view>
+          <view class="goto"><view data-orno="{{item.orno}}" bindtap="toDetail">查看详情</view></view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:elif="{{tabList[2].isActive}}">
+      <view class="order_item" 
+            wx:for="{{orderList}}" 
+            wx:if="{{item.orstatue == '0' || item.orstatue == '2' || item.orstatue == '4'}}">
+        <view class="top_line" data-orno="{{item.orno}}" bindtap="toDetail">
+          下单时间: {{item.ordate}}
+        </view>
+        <view class="info_wrap" data-orno="{{item.orno}}" bindtap="toDetail">
+          <view class="left_wrap">
+            <view class="line1">{{item.cname}}</view>
+            <view class="line">
+              区域：{{item.aname}}
+              <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+              车位号：{{item.pno}}
+            </view>
+            <view class="line">开发商：{{item.dname}}</view>
+            <view class="line2">
+              建筑面积：{{item.pbuildarra}}㎡
+              <text decode="true">&nbsp;</text>
+              使用面积：{{item.pusearea}}㎡
+            </view>
+          </view>
+          <view class="right_wrap">
+            <view wx:if="{{item.orstatue == '0'}}">未交预约金</view>
+            <view wx:elif="{{item.orstatue == '2'}}">
+              <text decode="true">&nbsp;</text>未交定金
+            </view>
+            <view wx:elif="{{item.orstatue == '4'}}">
+              <text decode="true">&nbsp;</text>未交尾款
+            </view>
+          </view>
+        </view>
+        <view class="bottom_line">
+          车位价格：<view class="info_price">{{item.psalernuitprice}}元</view>
+          <view class="cancel"><view data-orno="{{item.orno}}" bindtap="deleteOrder">取消订单</view></view>
+          <view class="goto"><view data-orno="{{item.orno}}" bindtap="toDetail">查看详情</view></view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:elif="{{tabList[3].isActive}}">
+      <view class="order_item" wx:for="{{orderList}}" wx:if="{{item.orstatue == '3'}}">
+        <view class="top_line" data-orno="{{item.orno}}" bindtap="toDetail">
+          下单时间: {{item.ordate}}
+        </view>
+        <view class="info_wrap" data-orno="{{item.orno}}" bindtap="toDetail">
+          <view class="left_wrap">
+            <view class="line1">{{item.cname}}</view>
+            <view class="line">
+              区域：{{item.aname}}
+              <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+              车位号：{{item.pno}}
+            </view>
+            <view class="line">开发商：{{item.dname}}</view>
+            <view class="line2">
+              建筑面积：{{item.pbuildarra}}㎡
+              <text decode="true">&nbsp;</text>
+              使用面积：{{item.pusearea}}㎡
+            </view>
+          </view>
+          <view class="right_wrap">
+            <view wx:if="{{item.orstatue == '3'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>待签约
+            </view>
+          </view>
+        </view>
+        <view class="bottom_line">
+          车位价格：<view class="info_price">{{item.psalernuitprice}}元</view>
+          <view class="cancel"><view data-orno="{{item.orno}}" bindtap="deleteOrder">取消订单</view></view>
+          <view class="goto"><view data-orno="{{item.orno}}" bindtap="toDetail">查看详情</view></view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+    <block wx:elif="{{tabList[4].isActive}}">
+      <view class="order_item" wx:for="{{orderList}}" wx:if="{{item.orstatue == '5'}}">
+        <view class="top_line" data-orno="{{item.orno}}" bindtap="toDetail">
+          下单时间: {{item.ordate}}
+        </view>
+        <view class="info_wrap" data-orno="{{item.orno}}" bindtap="toDetail">
+          <view class="left_wrap">
+            <view class="line1">{{item.cname}}</view>
+            <view class="line">
+              区域：{{item.aname}}
+              <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text>
+              车位号：{{item.pno}}
+            </view>
+            <view class="line">开发商：{{item.dname}}</view>
+            <view class="line2">
+              建筑面积：{{item.pbuildarra}}㎡
+              <text decode="true">&nbsp;</text>
+              使用面积：{{item.pusearea}}㎡
+            </view>
+          </view>
+          <view class="right_wrap">
+            <view wx:if="{{item.orstatue == '5'}}">
+              <text decode="true">&nbsp;&nbsp;&nbsp;</text>已完成
+            </view>
+          </view>
+        </view>
+        <view class="bottom_line">
+          车位价格：<view class="info_price">{{item.psalernuitprice}}元</view>
+          <view class="cancel"><view data-orno="{{item.orno}}" bindtap="deleteOrder">取消订单</view></view>
+          <view class="goto"><view data-orno="{{item.orno}}" bindtap="toDetail">查看详情</view></view>
+        </view>
+      </view>
+      <view class="nomore"><view>已经到底啦~</view></view>
+    </block>
+  </tab>

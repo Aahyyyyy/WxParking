@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>合同信息查看</title>
+
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{developer/commons::siderbar(active='invoice')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{developer/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>合同信息查看 </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <h3>合同内容</h3>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="invoicecontract:${invoicecontracts}">
+                                    <td >
+                                    <textarea type="text" rows="28" cols="150"
+                                              th:text="${invoicecontract.getContract()}"
+                                              th:value="${invoicecontract.getContract()}">
+                                    </textarea>
+                                    </td>
+
+                                    </tr>
+                                <tr>
+                                    <td>
+                                    <button type="button" th:onclick="reviseContract(this)" class="btn btn-primary" data-toggle="modal" data-target="#reviseContract">修改合同信息</button>
+                                    <button type="button" th:onclick="deleteContract(this)" class="btn btn-danger" data-toggle="modal" data-target="#deleteContract">删除</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+</script>
+
+</body>
+
+</html>

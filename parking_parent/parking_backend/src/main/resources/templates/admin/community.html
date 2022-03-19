@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>社区信息管理</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{admin/commons::siderbar(active='Parking')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{admin/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5> 楼盘区域管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 两个搜索框-->
+                    <div class="ibox-content">
+                        <form th:action="@{/admin/queryCommunity}" method="post">
+                            <div class="row">
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryCommunity">
+                                    <option th:each="community:${communities}" th:value="${community.getCname()}" th:text="${community.getCname()}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryArea">
+                                    <option th:each="area:${areas}" th:value="${area.getAname()}" th:text="${area.getAname()}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                            </div>
+                        </form>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>楼盘名称</th>
+                                    <th>楼盘地址</th>
+                                    <th>所在城市</th>
+                                    <th>区域名 </th>
+                                    <th>操作 </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="communityInfos:${communityInfo}">
+                                    <td th:text="${communityInfosStat.count}"></td>
+                                    <td th:text="${communityInfos.getCname()}"></td>
+                                    <td th:text="${communityInfos.getCaddress()}"></td>
+                                    <td th:text="${communityInfos.getCcity()}"></td>
+                                    <td th:text="${communityInfos.getAname()}"></td>
+                                    <!--//规划新页面-->
+                                    <td><button type="button" th:onclick="revises(this)" class="btn btn-primary" data-toggle="modal" data-target="#revise">修改楼盘区域信息</button>
+                                        <button type="button" th:onclick="deleteCommunity(this)" class="btn btn-danger" data-toggle="modal" data-target="#deleteCom">删除</button></td>
+                                </tr>
+                                </tbody>
+                                <!--模态框 deleteModal-->
+                                <div class="modal inmodal" id="deleteCom" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-trash-o modal-icon"></i>
+                                                <h4 class="modal-title" style="color: red">删除</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/admin/deleteCommunity}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>楼盘名称</strong>
+                                                        <input type="hidden" id="hiddenCname" name="hiddenCname">
+                                                        <input type="text" disabled="disabled" id="deleteCname" name="deleteCname" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>区域名</strong>
+                                                        <input type="hidden" id="hiddenAname" name="hiddenAname">
+                                                        <input type="text" disabled="disabled" id="deleteAname" name="deleteAname" class="form-control" />
+                                                    </div>
+                                                    <h2><strong>确定要删除吗？</strong></h2>
+                                                    <div class="form-group">
+                                                        <input id="deletedDno" type="hidden" name="Dno"/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-danger">删除</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--模态框 revise-->
+                                <div class="modal inmodal" id="revise" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >楼盘区域信息修改</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/admin/revise}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>楼盘名称</strong>
+                                                        <input type="hidden" id="hiddenCname2" name="hiddenCname2">
+                                                        <input type="text"  maxlength="20" id="Cname"  name="Cname" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>楼盘地址</strong>
+                                                        <input type="text" maxlength="20" id="Caddress" name="Caddress" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>所在城市</strong>
+                                                        <input type="text" maxlength="20" id="Ccity" name="Ccity" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>区域名称</strong>
+                                                        <input type="hidden" id="hiddenAname2" name="hiddenAname2">
+                                                        <input type="text" maxlength="20" id="Aname" name="Aname" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>开发公司</strong>
+                                                        <input type="hidden" id="hiddenDno" name="hiddenDno">
+                                                        <input type="text" maxlength="20" name="Dno" class="form-control" required=""/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-danger">修改</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--模态框 addCommunity-->
+                                <div class="modal inmodal" id="addCommunity" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >添加楼盘区域</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/admin/addCommunity}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>楼盘名称</strong>
+                                                        <input type="text" maxlength="13" name="Cname" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>楼盘地址</strong>
+                                                        <input type="text" maxlength="13" name="Caddress" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>所在城市</strong>
+                                                        <input type="text" maxlength="13" name="Ccity" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>区域名称</strong>
+                                                        <input type="text" maxlength="13" name="Aname" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>区域名称</strong>
+                                                        <input type="text" maxlength="13" name="Dno" class="form-control" required=""/>
+                                                    </div>
+                                                    <!--<input type="hidden" name="Dno" id="Dno">-->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary">添加</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                        <!--<div class="" >
+                            <button type="button" th:onclick="openAddModal(this)" data-toggle="modal"  class="btn btn-primary col-lg-12" data-target="#addCommunity">添加楼盘区域</button>&nbsp;
+                        </div>-->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    /* function openVerifyModal(obj) {
+         var $td = $(obj).parents('tr').children('td');
+         // console.log($(obj));
+         var Te_Id = $td.eq(1).text();
+         $("#te_id").val(Te_Id);
+     }*/
+
+    function deleteCommunity(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        // var deletedSno = $td.eq(1).text();
+        // $("#deletedDno").val(deleteDno);
+        var deleteCname = $td.eq(1).text();
+        $("#deleteCname").val(deleteCname);
+        $("#hiddenCname").val(deleteCname);
+        var deleteAname = $td.eq(4).text();
+        $("#deleteAname").val(deleteAname);
+        $("#hiddenAname").val(deleteAname);
+    }
+
+    function revises(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        var Cname = $td.eq(1).text();
+        $("#Cname").val(Cname);
+        $("#hiddenCname2").val(Cname);
+        var Caddress = $td.eq(2).text();
+        $("#Caddress").val(Caddress);
+        var Ccity = $td.eq(3).text();
+        $("#Ccity").val(Ccity);
+        var Aname = $td.eq(4).text();
+        $("#Aname").val(Aname);
+        $("#hiddenAname2").val(Aname);
+
+    }
+
+    function openAddModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Dno = $td.eq(1).text();
+        $("#Dno").val(Dno);
+
+    }
+</script>
+
+</body>
+
+</html>

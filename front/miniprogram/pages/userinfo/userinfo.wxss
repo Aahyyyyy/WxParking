@@ -1,0 +1,85 @@
+page {
+    background-color: rgba(250, 250, 250, 0.98);
+}
+
+.titleCss{
+  height: 40px;
+  justify-content: center;
+  text-align: center;
+  background-color: #f3f4f4;
+}
+
+.titleTextCss{
+  font-size: 35rpx;
+  line-height: 40px;
+}
+
+.tr_wrap {
+    display: flex;
+    border-top: 10rpx solid #f3f4f4;
+    height: 37px;
+}
+
+.labelCss {
+  display: flex;
+  flex: 0.5;
+  align-items: center;
+  justify-content: center;
+}
+
+.labelCss1 {
+    display: flex;
+    flex: 0.7;
+    align-items: center;
+    justify-content: center;
+}
+
+.addr {
+    width: 80px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.textCss{
+  font-size: 32rpx;
+  margin-left: 1vh;
+}
+
+.input_wrap {
+    display: flex;
+    flex: 1.2;
+    align-items: center;
+}
+
+.input_wrap1 {
+    display: flex;
+    flex: 0.77;
+    align-items: center;
+    justify-content: center;
+}
+
+.input_wrap2 {
+  display: flex;
+  flex: 1.7;
+  align-items: center;
+}
+
+.inputCss{
+  margin-left: 2vh;
+}
+
+.place-holder{
+  font-size: 30rpx;
+}
+
+.addBnCss {
+    margin-top: 10%;
+}
+
+.addBnCss button {
+    background-color: #FACC31 !important;
+    color: #191919;
+    height: 40px;
+    align-items: center;
+}

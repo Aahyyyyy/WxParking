@@ -1,0 +1,129 @@
+/**index.wxss**/
+.name_row{
+  display:flex;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 15rpx;
+}
+
+img {
+  width: 100%;
+}
+
+.name{
+  margin-left: 30rpx;
+  flex:5;
+  display:inline;
+  color:black;
+  font-size: 50rpx;
+  padding:0 10 rpx;
+  align-items: center;
+}
+
+.cuxiao_icon{
+  flex:1;
+  display:inline;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 1rpx;
+  
+}
+
+.price_wrap {
+  margin-left: 20rpx;
+}
+
+.info{
+  margin: 10rpx;
+  padding: 15rpx;
+  font-size:32rpx;
+  font-weight: 600;
+  margin-bottom: 60px;
+}
+
+.info view {
+  line-height: 50rpx;
+}
+
+.price{
+  font-size: 50rpx;
+  color:red;
+}
+
+.info1{
+  font-size: 32rpx;
+}
+
+.car_info_high{
+  border: 1rpx solid #000;
+  margin-top: 20rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  margin-bottom: 35rpx;
+  position:relative;
+  top:20rpx;
+  width: 92%;
+  height: 200rpx;
+  box-shadow:0rpx 2rpx 5rpx 5rpx #c8c3c3;
+  border-radius: 15rpx;
+}
+
+.car_info{
+  display:flex;
+  margin-top: 15rpx;
+  align-items: center;
+  vertical-align: center; /**垂直居中*/
+  justify-content: center; /**内容居中*/
+}
+
+.car_info_part1{
+  flex:1;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.car_info_part2{
+  flex:1;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 1rpx solid #000;
+}
+
+
+.more_button{
+  width: 100%;
+  position: fixed;
+  bottom: 30rpx;
+}
+
+.btn{
+  width: 80%;
+  margin-top: 20rpx;
+  background-color: red;
+  color: white;
+  border-radius: 98rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.asold_num{
+  color:red;
+  font-size: large;
+}
+
+.aselling_num{
+  color:green;
+  font-size: large;
+}
+
+.areserved_num{
+  color:blue;
+  font-size: large;
+}

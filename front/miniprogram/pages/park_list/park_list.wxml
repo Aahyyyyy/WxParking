@@ -1,0 +1,65 @@
+<view class="area_wrap">
+  <view class="picker_wrap">
+    <picker class="pick" bindchange="bindPickerChange1" value="{{index}}" range="{{array1}}" range-key="aname">
+        <view class="picker" style="margin-left: 38.5%;">
+          {{array1[index1].aname}}
+        </view>
+    </picker>
+  </view>
+</view>
+<image wx:if="{{index1 == 0}}" bindtap="viewImg1" style="width: 100%;" src="http://r35lytik8.hd-bkt.clouddn.com/image/parking1.png"></image>
+<image wx:if="{{index1 == 1}}" bindtap="viewImg2" src="http://r35lytik8.hd-bkt.clouddn.com/image/parking2.png"></image>
+<view class="parking_status">
+  <picker class="pick" bindchange="bindPickerChange2" value="{{index}}" range="{{array2}}">
+    <view class='picker'>
+      状态:{{array2[index2]}}
+    </view>
+    <image class="prcker_img" mode="widthFix" src="../../images/Icon/xiala.png"></image>
+  </picker>
+
+  <picker class="pick" bindchange="bindPickerChange3" value="{{index}}" range="{{array3}}">
+    <view class='picker'>
+      距离:{{array3[index3]}}
+    </view>
+    <image class="prcker_img" mode="widthFix" src="../../images/Icon/xiala.png"></image>
+  </picker>
+</view>
+
+<!-- 搜索框 -->
+<view class="search">
+  <view class="search_wrap">
+    <view class="searchbox">
+      <icon type="search" size="20" />
+      <input x:if="{{input}}" type="text" bindinput="getParkByKey" value="{{input}}" placeholder="       请输入车位号" />
+    </view>
+  </view>
+</view>
+
+
+<view class="car_status"></view>
+<view class="first_car" wx:for="{{parking_list}}" wx:key="parking_id">
+  <navigator classs="car_items" bindtap="more_detail" data-item="{{item}}">
+    <view class="line">
+      <view class="info">区域：{{item.aname}}</view>
+      <view class="info">车位号：{{item.pno}}</view>
+      <image class="img_wrap" mode="widthFix" src="../../images/Icon/src_assets_public_huodongzhong.png"></image>
+    </view>
+    <view class="line">
+      <view class="info">建筑面积：{{item.pbuildarra}}</view>
+      <view class="infomid">使用面积：{{item.pusearea}}</view>
+    </view>
+    <view class="line">
+      <view class="info">活动价<text class="high_light">{{item.psalernuitprice}}</text></view>
+      <view class="info">原价:{{item.psalerprice}}</view>
+      <block wx:if="{{item.pstatus == 0}}">
+        <image class="img_wrap" mode="widthFix" src="../../images/Icon/src_assets_community_keshou.png"></image>
+      </block>
+      <block wx:elif="{{item.pstatus == 1}}">
+        <image class="img_wrap" mode="widthFix" src="../../images/Icon/reserved.png"></image>
+      </block>
+      <block wx:elif="{{item.pstatus == 2}}">
+        <image class="img_wrap" mode="widthFix" src="../../images/Icon/sold.png"></image>
+      </block>
+    </view>
+  </navigator>
+</view>

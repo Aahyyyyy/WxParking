@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>车位信息管理</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{admin/commons::siderbar(active='InfoDelivery')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{admin/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Custom responsive table </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 两个搜索框-->
+                    <div class="ibox-content">
+                        <form th:action="@{/admin/queryGrade}" method="post">
+                            <div class="row">
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryYear">
+                                    <option  th:each="year:${session.yearSet}" th:value="${year}" th:text="${year}"></option>
+                                </select>
+                                </div>
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryTerm">
+<!--                                    <option value="上学期">上学期</option>-->
+<!--                                    <option value="下学期">下学期</option>-->
+                                </select>
+                                </div>
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                            </div>
+                        </form>
+                        <div class="" data-toggle="modal" align="right">
+                            <button type="button" th:onclick="openAddModal(this)" class="btn btn-primary" data-toggle="modal" data-target="#addParking">发布车位</button>&nbsp;
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>车位所在小区</th>
+                                    <th>车位所在区域</th>
+                                    <th>车位号 </th>
+                                    <th>车位长 </th>
+                                    <th>车位宽</th>
+                                    <th>建筑面积</th>
+                                    <th>使用面积</th>
+                                    <th>销售价格</th>
+                                    <th>销售单价</th>
+                                    <th>销售公司</th>
+<!--                                    <th>操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="parkingInfos:${viewParkingInfos}">
+                                        <td th:text="${parkingInfosStat.count}"></td>
+                                        <td th:text="${parkingInfos.getCname()}"></td>
+                                        <td th:text="${parkingInfos.getAname()}"></td>
+                                        <td th:text="${parkingInfos.getPno()}"></td>
+                                        <td th:text="${parkingInfos.getPlength()}"></td>
+                                        <td th:text="${parkingInfos.getPwide()}"></td>
+                                        <td th:text="${parkingInfos.getPbuildarra()}"></td>
+                                        <td th:text="${parkingInfos.getPusearea()}"></td>
+                                        <td th:text="${parkingInfos.getPsalerprice()}"></td>
+                                        <td th:text="${parkingInfos.getPsalernuitprice()}"></td>
+                                        <td th:text="${parkingInfos.getSname()}"></td>
+                                        <td>
+<!--                                            <button type="button" th:onclick="reviseParking(this)" class="btn btn-primary" data-toggle="modal" data-target="#revisePark">修改车位信息</button>-->
+<!--                                            <button type="button" th:onclick="deleteParking(this)" class="btn btn-danger" data-toggle="modal" data-target="#deletePark">删除</button></td>-->
+                                    </tr>
+                                </tbody>
+<!--                                &lt;!&ndash; 模态框 revisePark &ndash;&gt;-->
+<!--                                <div class="modal inmodal" id="revisePark" tabindex="-1" role="dialog"  aria-hidden="true">-->
+<!--                                    <div class="modal-dialog">-->
+<!--                                        <div class="modal-content animated fadeIn">-->
+<!--                                            <div class="modal-header">-->
+<!--                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+<!--                                                <i class="fa fa-plus-circle modal-icon"></i>-->
+<!--                                                <h4 class="modal-title" >修改车位信息</h4>-->
+<!--                                            </div>-->
+<!--                                            <form role="form" th:action="@{/admin/revisePark}" method="post">-->
+<!--                                                <div class="modal-body" >-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位所在小区</strong>-->
+<!--                                                        <select class="form-control m-b" name="Cname">-->
+<!--                                                            <option  th:each="community:${communities}" th:value="${community.getCname()}" th:text="${community.getCname()}" ></option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位所在区域</strong>-->
+<!--                                                        <select class="form-control m-b" name="Aname">-->
+<!--                                                            <option th:each="area:${areas}" th:value="${area.getAname()}" th:text="${area.getAname()}" ></option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>销售公司</strong>-->
+<!--                                                        <select class="form-control m-b" name="Sname">-->
+<!--                                                            <option th:each="saler:${salers}" th:value="${saler.getSname()}" th:text="${saler.getSname()}" ></option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位长</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Plength" name="Plength" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位宽</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Pwide" name="Pwide" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>建筑面积</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Pbuildarra" name="Pbuildarra" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>使用面积</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Pusearea" name="Pusearea" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>销售价格</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Psalerprice" name="Psalerprice" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>销售单价</strong>-->
+<!--                                                        <input type="text" maxlength="10" id="Psalernuitprice" name="Psalernuitprice" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <input type="hidden" name="Pno" id="Pno">-->
+<!--                                                </div>-->
+<!--                                                <div class="modal-footer">-->
+<!--                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>-->
+<!--                                                    <button type="submit" class="btn btn-primary">修改</button>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;模态框 deleteModal&ndash;&gt;-->
+<!--                                <div class="modal inmodal" id="deletePark" tabindex="-1" role="dialog"  aria-hidden="true">-->
+<!--                                    <div class="modal-dialog">-->
+<!--                                        <div class="modal-content animated fadeIn">-->
+<!--                                            <div class="modal-header">-->
+<!--                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+<!--                                                <i class="fa fa-trash-o modal-icon"></i>-->
+<!--                                                <h4 class="modal-title" style="color: red">删除</h4>-->
+<!--                                            </div>-->
+<!--                                            <form role="form" th:action="@{/admin/deleteParking}" method="post">-->
+<!--                                                <div class="modal-body" >-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位所在小区</strong>-->
+<!--                                                        <input type="text" maxlength="20" id="Cname" name="Cname" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位所在区域</strong>-->
+<!--                                                        <input type="text" maxlength="20" id="Aname" name="Aname" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>销售公司</strong>-->
+<!--                                                        <input type="text" maxlength="20" id="Sname" name="Sname" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <strong>车位号</strong>-->
+<!--                                                        <input type="text" maxlength="20" id="deletePno" name="deletePno" class="form-control" />-->
+<!--                                                    </div>-->
+<!--                                                    <h2><strong>确定要删除吗？</strong></h2>-->
+<!--                                                    <div class="form-group">-->
+<!--                                                        <input id="deletedDno" type="hidden" name="Dno"/>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="modal-footer">-->
+<!--                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>-->
+<!--                                                    <button type="submit" class="btn btn-danger">删除</button>-->
+<!--                                                </div>-->
+<!--                                            </form>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <!--模态框 addParking-->
+                                <div class="modal inmodal" id="addParking" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >添加车位信息</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/admin/addParking}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>车位所在小区</strong>
+                                                        <select class="form-control m-b" name="Cname">
+                                                            <option th:each="community:${communities}" th:value="${community.getCname()}" th:text="${community.getCname()}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位所在区域</strong>
+                                                        <select class="form-control m-b" name="Aname">
+                                                            <option th:each="area:${areas}" th:value="${area.getAname()}" th:text="${area.getAname()}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>销售公司</strong>
+                                                        <select class="form-control m-b" name="Sname">
+                                                            <option th:each="saler:${salers}" th:value="${saler.getSname()}" th:text="${saler.getSname()}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位长</strong>
+                                                        <input type="text" maxlength="13" name="Plength" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位宽</strong>
+                                                        <input type="text" maxlength="13" name="Pwide" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>建筑面积</strong>
+                                                        <input type="text" maxlength="13" name="Pbuildarra" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>使用面积</strong>
+                                                        <input type="text" maxlength="13" name="Pusearea" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>销售平方价格</strong>
+                                                        <input type="text" maxlength="13" name="Psalernuitprice" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>销售价格</strong>
+                                                        <input type="text" maxlength="13" name="Psalerprice" class="form-control" required=""/>
+                                                    </div>
+                                                    <input type="hidden" name="Dno" id="Dno">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary">添加</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+    // function deleteParking(obj) {
+    //     var $td = $(obj).parents('tr').children('td');
+    //     var Cname = $td.eq(1).text();
+    //     $("#Cname").val(Cname);
+    //     var Aname = $td.eq(2).text();
+    //     $("#Aname").val(Aname);
+    //     var deletePno = $td.eq(3).text();
+    //     $("#deletePno").val(deletePno);
+    //     var Sname = $td.eq(10).text();
+    //     $("#Sname").val(Sname);
+    // }
+    //
+    // function reviseParking(obj) {
+    //     var $td = $(obj).parents('tr').children('td');
+    //     var Cname = $td.eq(1).text();
+    //     $("#Cname").val(Cname);
+    //     var Aname = $td.eq(2).text();
+    //     $("#Aname").val(Aname);
+    //     var Pno = $td.eq(3).text();
+    //     $("#Pno").val(Pno);
+    //     var Plength = $td.eq(4).text();
+    //     $("#Plength").val(Plength);
+    //     var Pwide = $td.eq(5).text();
+    //     $("#Pwide").val(Pwide);
+    //     var Pbuildarra = $td.eq(6).text();
+    //     $("#Pbuildarra").val(Pbuildarra);
+    //     var Pusearea = $td.eq(7).text();
+    //     $("#Pusearea").val(Pusearea);
+    //     var Psalerprice = $td.eq(8).text();
+    //     $("#Psalerprice").val(Psalerprice);
+    //     var Psalernuitprice = $td.eq(9).text();
+    //     $("#Psalernuitprice").val(Psalernuitprice);
+    // }
+
+    function openAddModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Sno = $td.eq(1).text();
+        $("#Sno").val(Sno);
+    }
+
+</script>
+
+</body>
+
+</html>

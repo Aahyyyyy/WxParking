@@ -1,0 +1,75 @@
+page {
+    background-color: #f3f4f4;
+}
+
+.like_item {
+    display: flex;
+    width: 92%;
+    height: auto;
+    margin-top: 12px;
+    margin-left: 12px;
+    padding-bottom: 12px;
+    border-radius: 20rpx;
+    background-color: #fff;
+}
+
+.left_wrap {
+    flex: 1;
+    font-size: 34rpx;
+    font-weight: bold;
+    
+    display: inline;
+    padding-top: 9%;
+    color: #191919;
+    border-radius: 10px;
+    margin: 10px 20px 0px 15px;
+    background: linear-gradient(to top, #FACC31, rgb(255, 252, 94))
+}
+
+.left_line {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.right_wrap {
+    flex: 2;
+    display: inline;
+    padding-top: 5%;
+}
+
+.right_line {
+    display: flex;
+    flex-direction: row;
+    justify-content:first baseline;
+}
+
+.info_name {
+    display: flex;
+    flex: 1.5;
+    font-weight: bold;
+}
+
+.info_img {
+    display: flex;
+    flex: 0.5;
+}
+
+.info_img image {
+    width: 85%;
+    height: 100%;
+}
+
+.info_price {
+    margin-top: 8rpx;
+    color: red;
+    font-weight: bold;
+    font-size: 32rpx;
+}
+
+.nomore {
+    margin-top: 5rpx;
+    margin-left: 36%;
+    color: rgb(134, 134, 134);
+}
+

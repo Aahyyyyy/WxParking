@@ -1,0 +1,18 @@
+/* pages/contract/contract.wxss */
+.addBnCss {
+    margin-top: 10%;
+}
+
+.addBnCss button {
+    background-color: #FACC31 !important;
+    color: #191919;
+}
+
+.contractImg{
+    height: 800rpx;
+    
+}
+.contractImg image{
+    width: 100%;
+    height: 100%;
+}

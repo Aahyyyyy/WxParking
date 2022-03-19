@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>销售订单管理</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{saler/commons::siderbar(active='ordermanage')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{saler/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>销售订单管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form th:action="@{/saler/queryOrdering}" method="post">
+                            <div class="row">
+                                <div class="col-sm-3 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryOwner">
+                                    <option th:each="owner:${owners}" th:value="${owner.getOname()}" th:text="${owner.getOname()}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <div class="col-sm-4 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryDate">
+                                    <option  th:each="dates:${session.date}" th:value="${dates}" th:text="${dates}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <div class="col-sm-4 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryPayment">
+                                    <option value="按揭">按揭</option>
+                                    <option value="分期">分期</option>
+                                    <option value="一次性">一次性</option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                            </div>
+                        </form>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>订单编号</th>
+                                    <th>业主姓名</th>
+                                    <th>车位编号</th>
+                                    <th>订单金额</th>
+                                    <th>购买日期</th>
+                                    <th>订单状态</th>
+                                    <th>支付方式</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="viewOrderInfo:${viewOrderInfos}">
+                                        <th th:text="${viewOrderInfoStat.count}"></th>
+                                        <td th:text="${viewOrderInfo.getORno()}"></td>
+                                        <td th:text="${viewOrderInfo.getOname()}"></td>
+                                        <td th:text="${viewOrderInfo.getPno()}"></td>
+                                        <td th:text="${viewOrderInfo.getORmonry()}"></td>
+                                        <td th:text="${viewOrderInfo.getORdate()}"></td>
+                                        <td th:text="${viewOrderInfo.getORstatue()}"></td>
+                                        <td th:text="${viewOrderInfo.getORpayment()}"></td>
+                                        <td>
+                                            <button type="button" th:onclick="reviseOrder(this)" class="btn btn-primary" data-toggle="modal" data-target="#reviseOrder">修改订单信息</button>
+                                            <button type="button" th:onclick="deleteOrder(this)" class="btn btn-danger" data-toggle="modal" data-target="#deleteOrder">删除</button></td>
+                                    </tr>
+                                </tbody>
+                                <!-- 模态框 reviseOrder-->
+                                <div class="modal inmodal" id="reviseOrder" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >修改业主信息</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/saler/reviseOrder}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>订单编号</strong>
+                                                        <input type="hidden" id="hiddenORno2" name="hiddenORno2">
+                                                        <input type="text" disabled="disabled" id="ORno" name="ORno" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>业主姓名</strong>
+                                                        <select class="form-control m-b" name="Oname">
+                                                            <option th:each="owner:${owners}" th:value="${owner.getOname()}" th:text="${owner.getOname()}"></option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位编号</strong>
+                                                        <select class="form-control m-b" name="Pno">
+                                                            <option th:each="parking:${parkings}" th:value="${parking.getPno()}" th:text="${parking.getPno()}"></option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单金额</strong>
+                                                        <input type="text" maxlength="10" id="ORmonry" name="ORmonry" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>购买日期</strong>
+                                                        <input type="text" maxlength="20" id="ORdate" name="ORdate" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单状态</strong>
+                                                        <select class="form-control m-b" name="ORstatue">
+                                                            <option value="未交预约金">未交预约金</option>
+                                                            <option value="未交定金">已预约</option>
+                                                            <option value="未交定金">未交定金</option>
+                                                            <option value="待签约">待签约</option>
+                                                            <option value="未交尾款">未交尾款</option>
+                                                            <option value="已完成">已完成</option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>支付方式</strong>
+                                                        <select class="form-control m-b" name="ORpayment">
+                                                            <option value="一次性">一次性</option>
+                                                            <option value="分期">分期</option>
+                                                            <option value="按揭">按揭</option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary">修改</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--模态框 addOrder-->
+                                <div class="modal inmodal" id="addOrder" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >添加订单信息</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/saler/addOrder}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>业主姓名</strong>
+                                                        <select class="form-control m-b" name="Oname">
+                                                            <option th:each="owner:${owners}" th:value="${owner.getOname()}" th:text="${owner.getOname()}"></option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位编号</strong>
+                                                        <select class="form-control m-b" name="Pno">
+                                                            <option th:each="parking:${parkings}" th:value="${parking.getPno()}" th:text="${parking.getPno()}"></option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单金额</strong>
+                                                        <input type="text" maxlength="13" name="ORmonry" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>购买日期</strong>
+                                                        <input type="text" maxlength="20" name="ORdate" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单状态</strong>
+                                                        <select class="form-control m-b" name="ORstatue">
+                                                            <option value="未交预约金">未交预约金</option>
+                                                            <option value="未交定金">已预约</option>
+                                                            <option value="未交定金">未交定金</option>
+                                                            <option value="待签约">待签约</option>
+                                                            <option value="未交尾款">未交尾款</option>
+                                                            <option value="已完成">已完成</option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>支付方式</strong>
+                                                        <select class="form-control m-b" name="ORpayment">
+                                                            <option value="一次性">一次性</option>
+                                                            <option value="分期">分期</option>
+                                                            <option value="按揭">按揭</option>
+                                                            <option selected="selected"  style='display: none' value=""></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary">添加</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--模态框 deleteOrder-->
+                                <div class="modal inmodal" id="deleteOrder" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-trash-o modal-icon"></i>
+                                                <h4 class="modal-title" style="color: red">删除</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/saler/deleteOrder}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>订单编号</strong>
+                                                        <input type="hidden" id="hiddenORno" name="hiddenORno">
+                                                        <input type="text" disabled="disabled" id="deleteORno" name="deleteORno" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>业主姓名</strong>
+                                                        <input type="text" disabled="disabled" id="deleteOname" name="deleteOname" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>车位编号</strong>
+                                                        <input type="text" disabled="disabled" id="deletePno" name="deletePno" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单金额</strong>
+                                                        <input type="text" disabled="disabled" id="deleteORmonry" name="deleteORmonry" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>购买日期</strong>
+                                                        <input type="text" disabled="disabled" id="deleteORdate" name="deleteORdate" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>订单状态</strong>
+                                                        <input type="text" disabled="disabled" id="deleteORstatue" name="deleteORstatue" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>支付方式</strong>
+                                                        <input type="text" disabled="disabled" id="deleteORpayment" name="deleteORpayment" class="form-control" />
+                                                    </div>
+                                                    <h2><strong>确定要删除吗？</strong></h2>
+                                                    <div class="form-group">
+                                                        <input id="deletedDno" type="hidden" name="Dno"/>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-danger">删除</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                        <div class="" >
+                            <button type="button" th:onclick="addOrder(this)" data-toggle="modal"  class="btn btn-primary col-lg-12" data-target="#addOrder">添加订单信息</button>&nbsp;
+                        </div>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+    function deleteOrder(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        var deleteORno = $td.eq(0).text();
+        $("#deleteORno").val(deleteORno);
+        $("#hiddenORno").val(deleteORno);
+        var deleteOname = $td.eq(1).text();
+        $("#deleteOname").val(deleteOname);
+        var deletePno = $td.eq(2).text();
+        $("#deletePno").val(deletePno);
+        var deleteORmonry = $td.eq(3).text();
+        $("#deleteORmonry").val(deleteORmonry);
+        var deleteORdate = $td.eq(4).text();
+        $("#deleteORdate").val(deleteORdate);
+        var deleteORstatue = $td.eq(5).text();
+        $("#deleteORstatue").val(deleteORstatue);
+        var deleteORpayment = $td.eq(6).text();
+        $("#deleteORpayment").val(deleteORpayment);
+    }
+
+    function reviseOrder(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        var ORno = $td.eq(0).text();
+        $("#ORno").val(ORno);
+        $("#hiddenORno2").val(ORno);
+        var Oname = $td.eq(1).text();
+        $("#Oname").val(Oname);
+        var Pno = $td.eq(2).text();
+        $("#Pno").val(Pno);
+        var ORmonry = $td.eq(3).text();
+        $("#ORmonry").val(ORmonry);
+        var ORdate = $td.eq(4).text();
+        $("#ORdate").val(ORdate);
+        var ORstatue = $td.eq(5).text();
+        $("#ORstatue").val(ORstatue);
+        var ORpayment = $td.eq(6).text();
+        $("#ORpayment").val(ORpayment);
+    }
+
+    function addOrder(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        // var Sno = $td.eq(1).text();
+        // $("#Sno").val(Sno);
+    }
+
+</script>
+
+</body>
+
+</html>

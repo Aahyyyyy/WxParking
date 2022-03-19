@@ -1,0 +1,175 @@
+@import "../../lib/iconfont.wxss";
+.search {
+    display: flex;
+    height: 80rpx;
+    padding: 10rpx;
+    background-color: #FACC31;
+}
+
+.search_wrap {
+  padding-left: 5rpx;
+  margin-right: 8rpx;
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search_wrap navigator {
+  height: 70%;
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 15rpx;
+}
+
+.addr_wrap {
+  display: flex;
+  flex: 1.5;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.city_wrapper{
+  display: flex;
+  padding: 0;
+}
+
+.addr_wrap navigator{
+  display: flex;
+  padding: 0;
+}
+
+.img_wrap {
+  padding-left: 0;
+  padding-right: 0;
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img_wrap image {
+    width: 50%;
+    height: 30%;
+}
+
+.addr_content {
+  display: flex;
+  flex: 0.7;
+  align-items: center;
+}
+
+.address {
+  padding-top: 3rpx;
+  font-size: 34rpx;
+  width: 50px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.region-box {
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+}
+
+.region-box .region-top {
+  position: relative;
+  font-size: 40rpx;
+  color: #282828;
+  font-weight: bold;
+  line-height: 100rpx;
+  text-align: center;
+}
+
+.region-box .region-back {
+  width: 80rpx;
+  height: 80rpx;
+  font-size: 50rpx;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.region-box .region-tabs{
+  line-height: 60rpx;
+  font-size: 20rpx;
+}
+
+.region-tabs .tab {
+  min-width: 100rpx;
+  max-width: 200rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  color: #3095F9;
+  text-align: center;
+  border: 1rpx solid #3095F9;
+  border-radius: 20rpx;
+  display: inline-block;
+  margin: 20rpx 0 20rpx 20rpx;
+  padding: 3rpx 20rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.region-list .region-item{
+  font-size: 30rpx;
+  color: #282828;
+  line-height: 80rpx;
+  padding: 10rpx 30rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.map-prompt {
+  width: 420rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  color: #707070;
+  text-align: center;
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 0 0 10rpx rgba(0,0,0,0.1);
+  position: absolute;
+  bottom: 40rpx;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+
+.reload {
+  width: 80rpx;
+  height: 80rpx;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10rpx rgba(0,0,0,0.1);
+  position: absolute;
+  bottom: 30rpx;
+  right: 30rpx;
+}
+
+.reload .center1 {
+  width: 30rpx;
+  height: 30rpx;
+  border: 1rpx solid #3095F9;
+  border-radius: 50%;
+  margin: 24rpx auto;
+}
+
+.reload .center2 {
+  width: 25rpx;
+  height: 25rpx;
+  background: #3095F9;
+  border-radius: 50%;
+  margin: 3rpx auto;
+}

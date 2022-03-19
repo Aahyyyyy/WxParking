@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>实名认证批量管理</title>
+
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+  <!-- FooTable -->
+  <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+  <link th:href="@{/css/animate.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+  <!--侧边公共部分引入-->
+  <div th:replace="~{developer/commons::siderbar(active='ownerinfo')}"></div>
+
+  <div id="page-wrapper" class="gray-bg">
+    <!--头部公共部分引入-->
+    <div th:replace="~{developer/commons::topbar}"></div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox float-e-margins">
+            <div class="ibox-title">
+              <h5>实名认证批量管理</h5>
+              <div class="ibox-tools">
+                <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                  <i class="fa fa-wrench"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                  <li><a href="table_basic.html#">Config option 1</a>
+                  </li>
+                  <li><a href="table_basic.html#">Config option 2</a>
+                  </li>
+                </ul>
+                <a class="close-link">
+                  <i class="fa fa-times"></i>
+                </a>
+              </div>
+            </div>
+            <div class="ibox-content">
+              <form th:action="@{/developer/queryRealNameAuth}" method="post">
+                <div class="row">
+                  <div class="col-sm-5 m-b-xs"><h3>身份认证：</h3></div>
+                  <div class="col-sm-5 m-b-xs"><h3>实名认证：</h3></div>
+                </div>
+                <div class="row">
+                  <!--身份认证和实名认证搜索-->
+                  <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryIdnum">
+                    <option value="认证">认证</option>
+                    <option value="未认证">未认证</option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                  </div>
+                  <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryCertification">
+                    <option value="认证">认证</option>
+                    <option value="未认证">未认证</option>
+                    <option value="未身份认证">未身份认证</option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                  </div>
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                </div>
+              </form>
+
+              <form role="form" th:action="@{/developer/reviseRealNameAuth}" method="post">
+
+              <table class="table">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th>业主账号</th>
+                  <th>业主姓名</th>
+                  <th>地址 </th>
+                  <th>联系方式 </th>
+                  <th>身份证号码 </th>
+                  <th>身份认证状态</th>
+                  <th>实名认证状态</th>
+                  <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="owner:${owners}">
+                  <th th:text="${ownerStat.count}"></th>
+                  <td th:text="${owner.getOacconut()}"></td>
+                  <td th:text="${owner.getOname()}"></td>
+                  <td th:text="${owner.getOaddress()}"></td>
+                  <td th:text="${owner.getOphonenum()}"></td>
+                  <td th:text="${owner.getOidnum()}"></td>
+                  <td th:text="${owner.getOidauthflog()}"></td>
+                  <td th:text="${owner.getOcertificationflog()}"></td>
+                  <td>
+                    <input type="checkbox"  name="ownerList"
+                           th:value="${owner.getOno()}" th:text="${owner.getOno()}" >
+                  </td>
+                </tr>
+                </tbody>
+
+              </table>
+                <div class="form-group">
+                  <strong>实名认证状态</strong>
+                  <select class="form-control m-b" name="realNameStatus">
+                    <option value="未身份认证">未身份认证</option>
+                    <option value="未认证">未认证</option>
+                    <option value="认证">认证</option>
+                    <option selected="selected"  style='display: none' value=""></option>
+                  </select>
+                </div>
+                <button type="submit"   class="btn btn-primary col-lg-12" >修改实名认证</button>&nbsp;
+              </form>
+            </div>
+
+
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div th:replace="~{commons/commons::footer}"></div>
+
+  </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+  $(document).ready(function() {
+
+  });
+
+  function openVerifyModal(obj) {
+    var $td = $(obj).parents('tr').children('td');
+    // console.log($(obj));
+    var Te_Id = $td.eq(1).text();
+    $("#te_id").val(Te_Id);
+  }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<form bindsubmit="doOwnerCert">
+    <view class="titleCss">
+        <text class="titleTextCss">实名认证信息</text>
+    </view>
+    <view class="">
+        <view class="tr_wrap">
+            <view class="labelCss">
+                <text class="textCss">真实姓名</text>
+            </view>
+            <view class="input_wrap">
+                <input wx:if="{{formData.Oname}}" class="inputCss"
+                       bindblur="infoBlur" data-name="Oname"
+                       value="{{formData.Oname}}" disabled="true"/>
+                <input wx:else class="inputCss" 
+                       placeholder-class="place-holder" 
+                       bindblur="infoBlur" data-name="Oname"
+                       placeholder="请输入姓名"/>
+            </view>
+        </view>
+        <view class="tr_wrap">
+            <view class="labelCss">
+                <text class="textCss">身份证号码</text>
+            </view>
+            <view class="input_wrap">
+                <input class="inputCss" 
+                       placeholder-class="place-holder"
+                       bindblur="infoBlur" data-name="Oidnum"
+                       placeholder="请输入身份证号码"/>
+            </view>
+        </view>
+        <view class="tr_wrap"></view>
+    </view>
+    <view class="addBnCss">
+        <button class="weui-btn" form-type="submit">确定</button>
+    </view>
+</form>

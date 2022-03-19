@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "search":"../../components/search/search",
+    "tab":"../../components/tab/tab",
+    "search_park":"../../components/search_park/search_park",
+    "select": "../../components/select/select"
+},
+  "navigationBarTitleText":"车位列表",
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,55 @@
+<view class="head_wrap">
+    
+</view>
+<view class="content_wrap">
+    <view class="order_wrap">
+        <view class="left_wrap">
+            <view class="left_line">{{orderInfo.aname}}</view>
+            <view class="left_line">{{orderInfo.pno}}</view>
+        </view>
+        <view class="right_wrap">
+            <view class="right_line">
+                <view class="info_name" style="font-weight: bold;font-style: 30rpx;">{{orderInfo.aname}}/{{orderInfo.pno}}</view>
+            </view>
+            <view class="right_line" style="font-size: 26rpx;">建筑面积：{{orderInfo.pbuildarra}}㎡</view>
+            <view class="right_line" style="font-size: 26rpx;">使用面积：{{orderInfo.pusearea}}㎡</view>
+            <view class="right_line" style="font-size: 26rpx;">{{orderInfo.cname}}</view>
+            <view class="right_line">
+                <view class="info_price">￥{{orderInfo.psalernuitprice}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="detail_wrap">
+        <view class="detail_line">
+            <view class="left">订单编号：</view>
+            <view class="right">{{orderInfo.orno}}</view>
+        </view>
+        <view class="detail_line">
+            <view class="left">订单状态：</view>
+            <view class="right" wx:if="{{orderInfo.orstatue == '0'}}">未交预约金</view>
+            <view class="right" wx:elif="{{orderInfo.orstatue == '1'}}">已预约</view>
+            <view class="right" wx:elif="{{orderInfo.orstatue == '2'}}">未交定金</view>
+            <view class="right" wx:elif="{{orderInfo.orstatue == '3'}}">待签约</view>
+            <view class="right" wx:elif="{{orderInfo.orstatue == '4'}}">未交尾款</view>
+            <view class="right" wx:elif="{{orderInfo.orstatue == '5'}}">已完成</view>
+        </view>
+        <view class="detail_line">
+            <view class="left">付款方式：</view>
+            <view class="right" wx:if="{{orderInfo.orpayment == '1'}}">全款</view>
+            <view class="right" wx:elif="{{orderInfo.orpayment == '2'}}">分期</view>
+            <view class="right" wx:elif="{{orderInfo.orpayment == '3'}}">按揭</view>
+        </view>
+        <view class="detail_line">
+            <view class="left">下单日期：</view>
+            <view class="right">{{orderInfo.ordate}}</view>
+        </view>
+    </view>
+    <view class="btn_wrap">
+        <button type="default" bindtap="toPay"
+        wx:if="{{orderInfo.orstatue == '0' || orderInfo.orstatue == '2' || orderInfo.orstatue == '4'}}">
+        去支付</button>
+        <button type="default" bindtap="toSig"
+        wx:if="{{orderInfo.orstatue == '3'}}">
+        去签约</button>
+    </view>
+</view>

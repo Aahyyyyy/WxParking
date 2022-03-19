@@ -1,0 +1,48 @@
+page {
+	background-color: #f3f4f4;
+}
+
+.conv_item {
+	display: flex;
+	background-color: #fff;
+	border-bottom: 1px solid #f3f4f3;
+}
+
+.img_wrap {
+	margin: 8px 10px 8px 10px;
+	display: flex;
+	flex: 0.3;
+}
+
+.img_wrap image {
+	width: 95%;
+}
+
+.info_wrap {
+	padding-top: 8px;
+	flex: 1.6;
+}
+
+.info_name {
+	display: flex;
+	font-size: 14px;
+	font-weight: bold;
+	flex-direction: row;
+	justify-content: baseline;
+}
+
+.info_msg {
+	width: 220px;
+	line-clamp: 1;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin: 8px 8px 0px 0px;
+	color: rgb(134, 134, 134);
+}
+
+.nomore {
+	margin-top: 5rpx;
+    margin-left: 36%;
+    color: rgb(134, 134, 134);
+}

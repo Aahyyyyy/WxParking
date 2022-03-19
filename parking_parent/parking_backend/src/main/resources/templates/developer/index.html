@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>项目公司管理</title>
+
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script type="text/javascript" src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{developer/commons::siderbar(active='index.html')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{developer/commons::topbar}"></div>
+        <div class="wrapper wrapper-content animated fadeIn">
+            <div class="p-w-md m-t-sm">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="widget-head-color-box navy-bg p-lg text-center">
+                            <div class="m-b-md">
+                                <h2 class="font-bold no-margins" >
+                                    [[${session.user.getDname()}]]
+                                </h2>
+                                <small>[[${T(com.zjut.lsw.util.PinYinUtil).ToPinyin(session.user.getDname())}]]</small>
+                            </div>
+                            <img th:src="@{/img/a8.jpg}" class="img-circle circle-border m-b-md" alt="profile">
+                            <div>
+                                <span class="text-center" th:text="'账号：'+${session.user.getDaccount()}"></span>
+                            </div>
+                        </div>
+                        <div class="widget-text-box">
+                            <h4 class="media-heading">个人简介</h4>
+                            <p>无</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div id="main" style="width: 650px;height:400px;"></div>
+                            <script type="text/javascript">
+                                $(document).ready(function(){
+                                    // 基于准备好的dom，初始化echarts实例
+                                    var myChart = echarts.init(document.getElementById('main'));
+                                    //数据加载完之前先显示一段简单的loading动画
+                                    myChart.showLoading();
+                                    var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+                                    var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+                                    $.ajax({
+                                        type : "get",
+                                        async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                                        url : "/developer/index/list",    //请求发送到dataActiont处
+                                        /* data : {},*/
+                                        contentType : "application/json",        //返回数据形式为json
+                                        success : function(result) {
+                                            /*alert(result);*/
+                                            //请求成功时执行该函数内容，result即为服务器返回的json对象
+                                            if (result) {
+                                                for(var i=0;i<result.length;i++){
+                                                    names.push(result[i].name);
+                                                    values.push(result[i].num);
+                                                }
+                                                myChart.hideLoading();    //隐藏加载动画
+                                                myChart.setOption({
+                                                    //加载数据图表
+                                                    title:{
+                                                        text: '车位销售情况统计图'
+                                                    },
+
+                                                    legend: {
+                                                        data:['车位销量']
+                                                    },
+                                                    xAxis: {
+                                                        data: names,
+                                                        axisLabel:{
+                                                            interval: 0
+                                                        }
+
+                                                    },
+                                                    yAxis: {
+                                                        name: '车位销量',
+                                                        type: 'value'
+                                                    },
+                                                    series: [{
+                                                        // 根据名字对应到相应的系列
+                                                        name: '开发公司',
+                                                        type: 'line',
+                                                        data: values
+                                                    }]
+                                                });
+                                            }
+                                        },
+                                        error : function(errorMsg) {
+                                            //请求失败时执行该函数
+                                            alert("图表请求数据失败!");
+                                            myChart.hideLoading();
+                                        }
+                                    });//end ajax
+                                });
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <div class="titled-pane">
+                                                <h5>楼盘开盘管理</h5>
+                                                <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>楼盘名称</th>
+                                                    <th>区域名称</th>
+                                                    <th>开盘状态</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="viewCommunityinfo:${session.viewCommunityinfos}">
+                                                    <th th:text="${viewCommunityinfoStat.count}"></th>
+                                                    <td th:text="${viewCommunityinfo.getCname()}"></td>
+                                                    <td th:text="${viewCommunityinfo.getAname()}"></td>
+                                                    <td th:text="${viewCommunityinfo.getAstatus()}"></td>
+                                                    <td>
+                                                        <a th:href="@{/developer/quotation}"><button type="button" class="btn btn-primary" >查看详情</button></a>
+                                                </tr>
+                                                </tbody>
+                                            </div>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <a th:href="@{/developer/community}"><button type="button" class="btn btn-success" >
+                                    <div class="col-xs-7 text-right">
+                                        <h3 class="font-bold">楼盘区域</h3>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <h6 class="font-bold">点击管理楼盘区域信息</h6>
+                                    </div>
+                                </button></a>
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-2">
+                                <a th:href="@{/developer/parking}"><button type="button" class="btn btn-success" >
+                                    <div class="col-xs-7 text-right">
+                                        <h3 class="font-bold">车位信息</h3>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <h6 class="font-bold">点击管理车位信息</h6>
+                                    </div>
+                                </button></a>
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-2">
+                                <a th:href="@{/developer/quotation}"><button type="button" class="btn btn-success" >
+                                    <div class="col-xs-7 text-right">
+                                        <h3 class="font-bold">开盘管理</h3>
+                                    </div>
+                                    <div class="col-xs-11 text-right">
+                                        <h6 class="font-bold">点击管理楼盘开盘</h6>
+                                    </div>
+                                </button></a>
+                            </div>
+                        </div>
+                        <!--            空白行-->
+
+                        <div class="row">
+                            <div class="col-lg-1">
+                                <h6>  </h6>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <a th:href="@{/developer/ownerinfo}"><button type="button" class="btn btn-success" >
+                                    <div class="col-xs-7 text-right">
+                                        <h3 class="font-bold">业主信息</h3>
+                                    </div>
+                                    <div class="col-xs-11 text-right">
+                                        <h6 class="font-bold">点击管理业主信息</h6>
+                                    </div>
+                                </button></a>
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-1">
+                            </div>
+                            <div class="col-lg-2">
+                                <a th:href="@{/developer/invoice}"><button type="button" class="btn btn-success" >
+                                    <div class="col-xs-7 text-right">
+                                        <h3 class="font-bold">合同发票</h3>
+                                    </div>
+                                    <div class="col-xs-11 text-right">
+                                        <h6 class="font-bold">点击管理合同发票信息</h6>
+                                    </div>
+                                </button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--        <div class="row">-->
+        <!--            <div class="col-lg-3">-->
+        <!--            <div class="widget style1 lazur-bg">-->
+        <!--                <div class="row vertical-align">-->
+
+        <!--                    <ul class="nav metismenu" id="side-menu">-->
+        <!--                        <li th:class="${active=='community'?'active':''}">-->
+        <!--                            <ul class="nav nav-second-level">-->
+        <!--                                <a th:href="@{/developer/addCommunity}"><h2 class="font-bold no-margins" >发布楼盘</h2></a>-->
+        <!--                            </ul>-->
+        <!--                        </li>-->
+        <!--                    </ul>-->
+
+
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--            </div>-->
+
+        <!--            <div class="col-lg-3">-->
+        <!--                <div class="widget style1 lazur-bg">-->
+        <!--                    <div class="row vertical-align">-->
+
+        <!--                        <ul class="nav metismenu" id="side-menu">-->
+        <!--                            <li th:class="${active=='index.html'?'active':''}">-->
+        <!--                                <ul class="nav nav-second-level">-->
+        <!--                                    <a th:href="@{/developer/index}"><h2 class="font-bold no-margins" >个人信息2</h2></a>-->
+        <!--                                </ul>-->
+        <!--                            </li>-->
+        <!--                        </ul>-->
+
+
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--        </div>-->
+
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+</script>
+
+</body>
+
+</html>

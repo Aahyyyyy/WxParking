@@ -1,0 +1,65 @@
+<form bindsubmit="doOwnerIden">
+    <view class="titleCss">
+        <text class="titleTextCss">业主基础信息</text>
+    </view>
+    <view class="">
+        <view class="tr_wrap">
+            <view class="labelCss">
+                <text class="textCss">真实姓名</text>
+            </view>
+            <view class="input_wrap">
+                <input class="inputCss"
+                       bindblur="infoBlur" data-name="Oname"
+                       placeholder-class="place-holder" 
+                       placeholder="请输入姓名"/>
+            </view>
+            <view>{{nameCheck}}</view>
+        </view>
+        <view class="tr_wrap">
+            <view class="labelCss">
+                <text class="textCss">联系方式</text>
+            </view>
+            <view class="input_wrap">
+                <input class="inputCss" maxlength="11"
+                       bindblur="infoBlur" data-name="Ophonenum"
+                       placeholder-class="place-holder"
+                       placeholder="请输入联系方式"/>
+            </view>
+        </view>
+        <view class="tr_wrap">
+            <view class="labelCss">
+                <text class="textCss">电子邮箱</text>
+            </view>
+            <view class="input_wrap">
+                <input class="inputCss"
+                       bindblur="infoBlur" data-name="Oemail"
+                       placeholder-class="place-holder"
+                       placeholder="请输入电子邮箱"/>
+            </view>
+        </view>
+        <view class="tr_wrap">
+            <view class="input_wrap1">
+                <view>选择小区</view>
+            </view>
+            <view class="input_wrap2">
+                <picker bindchange="bindComChange" mode="selector" range-key="{{'cname'}}" range="{{comList}}">
+                    <view>{{comList[index1].caddress}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="tr_wrap">
+            <view class="input_wrap1">
+                <view>选择楼号</view>
+            </view>
+            <view class="input_wrap2">
+                <picker bindchange="bindBuildChange" mode="selector" range-key="{{'bname'}}" range="{{buildList}}">
+                    <view>{{buildList[index2].bname}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="tr_wrap"></view>
+    </view>
+    <view class="addBnCss">
+        <button class="weui-btn" form-type="submit">确定</button>
+    </view>
+</form>

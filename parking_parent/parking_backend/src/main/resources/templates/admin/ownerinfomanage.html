@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>业主信息发布</title>
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{admin/commons::siderbar(active='InfoDelivery')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{admin/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>业主信息管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form th:action="@{/admin/queryOwner}" method="post">
+                            <div class="row">
+                                <div class="col-sm-2 m-b-xs">
+                                    <h3><strong>请输入查找的业主姓名:</strong></h3>
+                                </div>
+                                <div class="col-sm-2 m-b-xs">
+                                    <div class="form-group">
+                                        <input type="text" maxlength="10" name="queryOname" class="form-control" required=""/>
+                                    </div>
+                                </div>
+                                <span class="input-group-btn"> <div class="col-sm-1 m-b-xs">
+                                    <button type="submit" class="btn btn-sm btn-primary"> 查询</button></div> </span>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>业主账号</th>
+                                    <th>业主姓名</th>
+                                    <th>地址 </th>
+                                    <th>联系方式 </th>
+                                    <th>身份证号码 </th>
+                                    <th>身份认证状态</th>
+                                    <th>实名认证状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="owner:${owners}">
+                                    <th th:text="${ownerStat.count}"></th>
+                                    <td th:text="${owner.getOacconut()}"></td>
+                                    <td th:text="${owner.getOname()}"></td>
+                                    <td th:text="${owner.getOaddress()}"></td>
+                                    <td th:text="${owner.getOphonenum()}"></td>
+                                    <td th:text="${owner.getOidnum()}"></td>
+                                    <td th:text="${owner.getOidauthflog()}"></td>
+                                    <td th:text="${owner.getOcertificationflog()}"></td>
+                                </tr>
+                                </tbody>
+                                <!--模态框 addParking-->
+                                <div class="modal inmodal" id="addOwner" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >添加业主信息</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/admin/addOwner}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>业主账号</strong>
+                                                        <input type="text" maxlength="13" name="Oacconut" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>业主姓名</strong>
+                                                        <input type="text" maxlength="13" name="Oname" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>地址</strong>
+                                                        <input type="text" maxlength="13" name="Oaddress" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>联系方式</strong>
+                                                        <input type="text" maxlength="13" name="Ophonenum" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>身份证号码</strong>
+                                                        <input type="text" maxlength="18" name="Oidnum" class="form-control" required=""/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>身份认证状态</strong>
+                                                        <select class="form-control m-b" name="Oidauthflog">
+                                                            <option   th:value="认证" th:text="认证"  ></option>
+                                                            <option   th:value="未认证" th:text="未认证" ></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>实名认证状态</strong>
+                                                        <select class="form-control m-b" name="Ocertificationflog">
+                                                            <option   th:value="认证" th:text="认证"  ></option>
+                                                            <option   th:value="未认证" th:text="未认证" ></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-primary">添加</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                        <div class="" >
+                            <button type="button" th:onclick="addOwner(this)" data-toggle="modal"  class="btn btn-primary col-lg-12" data-target="#addOwner">添加业主信息</button>&nbsp;
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+    function deleteOwnerinfo(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        var deleteOacconut = $td.eq(0).text();
+        $("#deleteOacconut").val(deleteOacconut);
+        $("#hiddenOacconut").val(deleteOacconut);
+        var deleteOname = $td.eq(1).text();
+        $("#deleteOname").val(deleteOname);
+        $("#hiddenOname").val(deleteOname);
+        var deleteOphonenum = $td.eq(3).text();
+        $("#deleteOphonenum").val(deleteOphonenum);
+        $("#hiddenOphonenum").val(deleteOphonenum);
+        var deleteOidnum = $td.eq(4).text();
+        $("#deleteOidnum").val(deleteOidnum);
+        $("#hiddenOidnum").val(deleteOidnum);
+        var deleteOidauthflog = $td.eq(5).text();
+        $("#deleteOidauthflog").val(deleteOidauthflog);
+        $("#hiddenOidauthflog").val(deleteOidauthflog);
+        var deleteOcertificationflog = $td.eq(6).text();
+        $("#deleteOcertificationflog").val(deleteOcertificationflog);
+        $("#hiddenOcertificationflog").val(deleteOcertificationflog);
+    }
+
+    function reviseOwner(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        var Oacconut = $td.eq(0).text();
+        $("#Oacconut").val(Oacconut);
+        var Oname = $td.eq(1).text();
+        $("#Oname").val(Oname);
+        var Oaddress = $td.eq(2).text();
+        $("#Oaddress").val(Oaddress);
+        var Ophonenum = $td.eq(3).text();
+        $("#Ophonenum").val(Ophonenum);
+        var Oidnum = $td.eq(4).text();
+        $("#Oidnum").val(Oidnum);
+        $("#oldOidnum").val(Oidnum);
+        var Oidauthflog = $td.eq(5).text();
+        $("#Oidauthflog").val(Oidauthflog);
+        var Ocertificationflog = $td.eq(6).text();
+        $("#Ocertificationflog").val(Ocertificationflog);
+    }
+
+    function addOwner(obj) {
+        var $td = $(obj).parents('tr').children('td');
+
+    }
+
+
+</script>
+</body>
+
+</html>

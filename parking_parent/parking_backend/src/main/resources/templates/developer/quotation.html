@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>开盘管理</title>
+
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{developer/commons::siderbar(active='quotation')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{developer/commons::topbar}"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>开盘管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_basic.html#">Config option 1</a>
+                                </li>
+                                <li><a href="table_basic.html#">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <form th:action="@{/developer/queryQuotation}" method="post">
+                            <div class="row">
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryCommunity">
+                                    <option th:each="community:${communities}" th:value="${community.getCname()}" th:text="${community.getCname()}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <div class="col-sm-5 m-b-xs"><select class="input-s-lg form-control input-s-lg inline" name="queryArea">
+                                    <option th:each="area:${areas}" th:value="${area.getAname()}" th:text="${area.getAname()}"></option>
+                                    <option selected="selected"  style='display: none' value=""></option>
+                                </select>
+                                </div>
+                                <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"> 查询</button> </span>
+                            </div>
+                        </form>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>楼盘名称</th>
+                                    <th>楼盘地址</th>
+                                    <th>区域名称 </th>
+                                    <th>开盘状态 </th>
+                                    <th>操作 </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="viewCommunityinfos:${viewCommunityinfo}">
+                                        <td th:text="${viewCommunityinfosStat.count}"></td>
+                                        <td th:text="${viewCommunityinfos.getCname()}"></td>
+                                        <td th:text="${viewCommunityinfos.getCaddress()}"></td>
+                                        <td th:text="${viewCommunityinfos.getAname()}"></td>
+                                        <td th:text="${viewCommunityinfos.getAstatus()}"></td>
+                                        <td>
+                                        <button type="button" th:onclick="reviseStatus(this)" class="btn btn-primary" data-toggle="modal" data-target="#reviseSta">修改开盘状态</button>
+                                    </tr>
+                                </tbody>
+                                <!--模态框 revise-->
+                                <div class="modal inmodal" id="reviseSta" tabindex="-1" role="dialog"  aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content animated fadeIn">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                <i class="fa fa-plus-circle modal-icon"></i>
+                                                <h4 class="modal-title" >楼盘区域信息修改</h4>
+                                            </div>
+                                            <form role="form" th:action="@{/developer/reviseSta}" method="post">
+                                                <div class="modal-body" >
+                                                    <div class="form-group">
+                                                        <strong>楼盘名称</strong>
+                                                        <input type="hidden" id="hiddenCname" name="hiddenCname">
+                                                        <input type="text"  disabled="disabled" id="Cname"  name="Cname" class="form-control"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>楼盘地址</strong>
+                                                        <input type="hidden" id="hiddenCaddress" name="hiddenCaddress">
+                                                        <input type="text" disabled="disabled" id="Caddress" name="Caddress" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>区域名称</strong>
+                                                        <input type="hidden" id="hiddenAname" name="hiddenAname">
+                                                        <input type="text" disabled="disabled" id="Aname" name="Aname" class="form-control" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <strong>开盘状态</strong>
+                                                        <select class="form-control m-b" name="Astatus">
+<!--                                                            <option  th:each="area:${areas}" th:value="${area.getAstatus()}" th:text="${area.getAstatus()}" ></option>-->
+                                                             <option   th:value="开盘" th:text="开盘"  selected="Atatus"></option>
+                                                            <option   th:value="未开盘" th:text="未开盘" selected="Atatus"></option>
+                                                        </select>
+                                                    </div>
+
+                                                    <input type="hidden" name="Dno" id="Dno">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                                    <button type="submit" class="btn btn-danger">修改</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+    function reviseStatus(obj) {
+        var $td = $(obj).parents('tr').children('td');
+         var Cname = $td.eq(1).text();
+        $("#Cname").val(Cname);
+        $("#hiddenCname").val(Cname);
+        var Caddress = $td.eq(2).text();
+        $("#Caddress").val(Caddress);
+        $("#hiddenCaddress").val(Caddress);
+        var Aname = $td.eq(3).text();
+        $("#Aname").val(Aname);
+        $("#hiddenAname").val(Aname);
+        var Astatus = $td.eq(4).text();
+        $("#Astatus").val(Astatus);
+    }
+
+</script>
+
+</body>
+
+
+</html>

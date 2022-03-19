@@ -1,0 +1,25 @@
+<view class="like_item" wx:for="{{likeList}}" bindtap="toDetail" data-pno="{{item.pno}}">
+    <view class="left_wrap">
+        <view class="left_line">{{item.aname}}</view>
+        <view class="left_line">{{item.pno}}</view>
+    </view>
+    <view class="right_wrap">
+        <view class="right_line">
+            <view class="info_name">{{item.cname}}</view>
+            <view class="info_img">
+                <image wx:if="{{item.pstatus == 0}}"
+                       src="../../images/Icon/src_assets_community_keshou.png"></image>
+                <image wx:elif="{{item.pstatus == 1}}"
+                       src="../../images/Icon/reserved.png"></image>
+                <image wx:elif="{{item.pstatus == 2}}"
+                       src="../../images/Icon/sold.png"></image>
+            </view>
+        </view>
+        <view class="right_line" style="margin-top: 15rpx;">{{item.aname}}</view>
+        <view class="right_line">{{item.caddress}}</view>
+        <view class="right_line">
+            <view class="info_price">{{item.psalernuitprice}}元</view>
+        </view>
+    </view>
+</view>
+<view class="nomore"><view>已经到底啦~</view></view>

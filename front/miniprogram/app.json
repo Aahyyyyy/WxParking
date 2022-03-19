@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/city/city",
+
+    "pages/pay_way/pay_way",
+    "pages/contract/contract",
+    "pages/pay_more/pay_more",
+    "pages/com_list/com_list",
+    "pages/park_list/park_list",
+    "pages/com_detail/com_detail",
+    "pages/park_detail/park_detail",
+    "pages/pay_confirm/pay_confirm",
+    
+    "pages/like/like",
+    "pages/chat/chat",
+    "pages/conversations/conversations",
+    
+    "pages/user/user",
+    "pages/identity/identity",
+    "pages/userinfo/userinfo",
+    "pages/face_check/face_check",
+    "pages/order_list/order_list",
+    "pages/order_detail/order_detail",
+    "pages/certification/certification"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FACC31",
+    "navigationBarTitleText": "朋贝车位",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#191919",
+    "selectedColor": "#FACC31",
+    "list": [
+      {
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "iconPath": "images/Icon/unselected/_home.png",
+      "selectedIconPath": "images/Icon/selected/home.png"
+      },
+      {
+        "pagePath": "pages/city/city",
+        "text": "地图",
+        "iconPath": "images/Icon/unselected/_map.png",
+        "selectedIconPath": "images/Icon/selected/map.png"
+      },
+      {
+        "pagePath": "pages/conversations/conversations",
+        "text": "消息",
+        "iconPath": "images/Icon/unselected/_chat.png",
+        "selectedIconPath": "images/Icon/selected/chat.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/Icon/unselected/_my.png",
+        "selectedIconPath": "images/Icon/selected/my.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "将获取您的位置信息"
+    }
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+  
+}

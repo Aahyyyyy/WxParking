@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>项目公司管理</title>
+
+
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- FooTable -->
+    <link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <!--侧边公共部分引入-->
+    <div th:replace="~{developer/commons::siderbar(active='information')}"></div>
+
+    <div id="page-wrapper" class="gray-bg">
+        <!--头部公共部分引入-->
+        <div th:replace="~{developer/commons::topbar}"></div>
+        <div class="wrapper wrapper-content animated fadeIn">
+            <div class="p-w-md m-t-sm">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="widget-head-color-box navy-bg p-lg text-center">
+                        <div class="m-b-md">
+                            <h2 class="font-bold no-margins" >
+                                [[${session.user.getDname()}]]
+                            </h2>
+                            <small>[[${T(com.zjut.lsw.util.PinYinUtil).ToPinyin(session.user.getDname())}]]</small>
+                        </div>
+                        <img th:src="@{/img/a8.jpg}" class="img-circle circle-border m-b-md" alt="profile">
+                        <div>
+                            <span class="text-center" th:text="'账号：'+${session.user.getDaccount()}"></span>
+                        </div>
+                    </div>
+                    <div class="widget-text-box">
+                        <h4 class="media-heading">个人简介</h4>
+                        <p>无</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+<!--                联系号码-->
+                <div class="col-lg-3">
+                    <div class="widget style1 lazur-bg">
+                        <div class="row vertical-align">
+                            <div class="col-xs-3">
+                                <i class="fa fa-user fa-3x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <h2 class="font-bold">[[${session.user.getDphonenum()}]]</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                地址-->
+                <div class="col-lg-3">
+                    <div class="widget style1 lazur-bg">
+                        <div class="row vertical-align">
+                            <div class="col-xs-2">
+                                <i class="fa fa-home fa-3x"></i>
+                            </div>
+                            <div class="col-xs-10 text-right" >
+                                <h2 class="font-bold"  >[[${session.user.getDaddress()}]]</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+        <div th:replace="~{commons/commons::footer}"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+<!-- FooTable -->
+<script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+
+<!-- Custom and plugin javascript -->
+<script th:src="@{/js/inspinia.js}"></script>
+<script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    $(document).ready(function() {
+
+        $('.footable').footable();
+        $('.footable2').footable();
+    });
+
+    function openVerifyModal(obj) {
+        var $td = $(obj).parents('tr').children('td');
+        // console.log($(obj));
+        var Te_Id = $td.eq(1).text();
+        $("#te_id").val(Te_Id);
+    }
+
+</script>
+
+</body>
+
+</html>

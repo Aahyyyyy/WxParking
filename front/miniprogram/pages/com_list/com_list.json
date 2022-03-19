@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "楼盘列表",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#191919"
+}

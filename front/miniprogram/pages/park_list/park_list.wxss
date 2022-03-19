@@ -1,0 +1,168 @@
+view {
+    color: var(--themeColor);
+}
+
+.area_wrap {
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FACC31;
+}
+
+.area_wrap picker {
+  width: 100px;
+  font-size: 14px;
+  display: inline;
+}
+
+.picker_wrap {
+  width: 80%;
+  display: flex;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+image {
+  width: 360px;
+}
+  
+.park_item {
+    display: flex;
+    border-bottom: 1rpx solid #ccc;
+}
+  
+.img_wrap {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.img_wrap image {
+    width: 100%;
+}
+  
+.info_wrap {
+    padding-left: 20rpx;
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+  
+.park_name {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+  
+.park_price {
+    color: red;
+}
+.parking_status{
+    display:flex;
+    padding-left: 15%;
+  }
+  
+  .pick{
+    flex:2;
+    display: inline-block;
+  }
+
+  .picker{
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .prcker_img{
+    display: inline-block;
+    vertical-align: middle;
+    width: 20px;
+    height: 20px;
+  }
+
+  
+  .first_car{
+    margin: 20rpx;
+    margin-left: 32rpx;
+    position:relative;
+    top:20rpx;
+    width: 92%;
+    display: inline-block;
+    justify-content: center;
+    box-shadow:0rpx 2rpx 5rpx 5rpx #c8c3c3;
+  }
+  
+  .car_items{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .line{
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+  }
+  
+  .info{
+    display:flex;
+    padding-left: 20rpx;
+    flex: 4;
+    font-size: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .infomid{
+    display:flex;
+    flex: 4.7;
+    font-size: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .img_wrap{
+    flex:1;
+  }
+  
+  .text1{
+    flex:1;
+  }
+  
+  .high_light{
+    flex:2;
+    font-size:40rpx;
+    color:red;
+  }
+  /* 搜索样式 */
+  .search {
+    display: flex;
+    height: 90rpx;
+    padding: 10rpx;
+  }
+
+  .searchbox {
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    border-radius: 15rpx;
+  }
+
+  .search_wrap {
+  padding-left: 5rpx;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  }

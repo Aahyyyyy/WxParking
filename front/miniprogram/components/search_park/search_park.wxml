@@ -1,0 +1,7 @@
+<view class="search">
+    <view class="search_wrap">
+        <navigator url="/pages/search/index" open-type="navigate">
+            <icon type="search" size="20"/>请输入车位号
+        </navigator>
+    </view>
+</view>

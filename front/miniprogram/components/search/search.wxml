@@ -1,0 +1,46 @@
+<view class="search">
+    <view class="addr_wrap">
+        <view class = "city_wrapper"  bindtap="chooseCity">
+            <view class="img_wrap">
+                <image mode="widthFix" class="locate" src="../../images/Icon/dingwei.png"></image>
+            </view>
+            <view class="addr_content">
+                <text class="address">{{currentRegion.city}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="search_wrap">
+        <navigator class="search_nav" url="/pages/com_list/com_list" open-type="navigate">
+            <icon type="search" size="20"></icon>搜索
+        </navigator>
+    </view>
+</view>
+
+
+<view class="region-box" wx:if="{{chooseCity}}">
+  <view class="region-top">
+    <view class="region-back iconfont icon-fanhui" bindtap="back2"></view>
+    <view class="title">选择城市</view>
+  </view>
+  <view class="region-tabs">
+    <text class="tab" bindtap="showProvince">{{currentProvince}}</text>
+    <text class="tab" bindtap="showCity" wx:if="{{!regionShow.province}}" bindtap="showCity">{{currentCity}}</text>
+    <!-- <text class="tab" bindtap="showDistrict" wx:if="{{regionShow.district}}" bindtap="showDistrict">{{currentDistrict}}</text> -->
+  </view>
+  <scroll-view scroll-y style="height:1050rpx;">
+    <view class="region-list" wx:if="{{regionShow.province}}">
+      <view class="region-item" wx:for="{{regionData.province}}" wx:key="index">
+        <view data-id="{{item.id}}" data-name="{{item.fullname}}" bindtap="selectProvince">
+          <text>{{item.fullname}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="region-list" wx:if="{{regionShow.city}}">
+      <view class="region-item" wx:for="{{regionData.city}}" wx:key="index">
+        <view data-id="{{item.id}}" data-name="{{item.fullname}}" bindtap="selectCity">
+          <text>{{item.fullname}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

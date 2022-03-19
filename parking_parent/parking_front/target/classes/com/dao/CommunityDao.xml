@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.CommunityDao">
+    <select id="findAll" resultType="com.pojo.Community">
+        select * from community
+    </select>
+
+    <select id="getComByKey" parameterType="String" resultType="com.pojo.Community">
+        select * from community where Cname like CONCAT('%', #{key}, '%')
+    </select>
+</mapper>

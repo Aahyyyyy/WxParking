@@ -1,0 +1,11 @@
+<view>
+  <view class="conv_item" wx:for="{{convList}}" bindtap="toChat" data-id="{{item.id}}" data-userSig="{{item.userSig}}" >
+    <view class="img_wrap">
+    <image mode="widthFix" src="{{item.img}}"></image></view>
+    <view class="info_wrap">
+      <view class="info_name">{{item.name}}</view>
+      <view class="info_msg">{{item.msg}}</view>
+    </view>
+  </view>
+  <view class="nomore"><view>已经到底啦~</view></view>
+</view>

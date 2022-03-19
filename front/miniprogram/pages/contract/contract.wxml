@@ -1,0 +1,6 @@
+<view class = "contractImg" >
+    <image  mode="widthtFix" src="http://r43wdn3t8.hn-bkt.clouddn.com/fieInVqCza"></image>
+</view>
+<view class="addBnCss" bindtap="confirm">
+        <button class="weui-btn" form-type="submit">同意</button>
+</view>

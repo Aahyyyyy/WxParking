@@ -1,0 +1,88 @@
+<view class="user_info_wrap">
+    <view wx:if="{{isShow}}" class="user_img_wrap">
+        <image class="img_bg" mode="widthFix" src="{{userinfo.avatarUrl}}"></image>
+        <view class="user_info">
+            <image class="user_icon" src="{{userinfo.avatarUrl}}"></image>
+            <view class="user_name">{{userinfo.nickName}}</view>
+        </view>
+    </view>
+    <button wx:else class="user_btn" type="primary" 
+            open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">登录
+    </button>
+</view>
+<view class="user_content">
+    <view class="user_main">
+        <view class="order_wrap">
+            <view class="order_title">车位订单</view>
+            <view class="order_content">
+                <navigator url="../order_list/order_list?type=0" hover-class="none">
+                    <image mode="widthFix" class="order_icon1" src="../../images/Icon/all.png"></image>
+                    <view class="order_name">全部订单</view>
+                </navigator>
+                <navigator url="../order_list/order_list?type=1" hover-class="none">
+                    <image mode="widthFix" class="order_icon" src="../../images/Icon/rengou.png"></image>
+                    <view class="order_name1">已预约</view>
+                </navigator>
+                <navigator url="../order_list/order_list?type=2" hover-class="none">
+                    <image mode="widthFix" class="order_icon" src="../../images/Icon/wait.png"></image>
+                    <view class="order_name1">待支付</view>
+                </navigator>
+                <navigator url="../order_list/order_list?type=3" hover-class="none">
+                    <image mode="widthFix" class="order_icon" src="../../images/Icon/check.png"></image>
+                    <view class="order_name1">待签约</view>
+                </navigator>
+                <navigator url="../order_list/order_list?type=4" hover-class="none">
+                    <image mode="widthFix" class="order_icon" src="../../images/Icon/done.png"></image>
+                    <view class="order_name1">已完成</view>
+                </navigator>
+            </view>
+        </view>
+        <view class="service_wrap">
+            <view class="service_title">我的服务</view>
+            <view class="service_content">
+                <navigator hover-class="none">
+                    <image mode="widthFix" class="service_icon" src="../../images/Icon/parking.png"></image>
+                    <view class="service_name">我的车位</view>
+                </navigator>
+                <navigator hover-class="none" url="../like/like">
+                    <image mode="widthFix" class="service_icon" src="../../images/Icon/shoucang.png"></image>
+                    <view class="service_name">我的收藏</view>
+                </navigator>
+                <navigator hover-class="none">
+                    <image mode="widthFix" class="service_icon" src="../../images/Icon/huodong.png"></image>
+                    <view class="service_name">我的活动</view>
+                </navigator>
+                <navigator hover-class="none" url="../conversations/conversations" open-type="switchTab">
+                    <image mode="widthFix" class="service_icon" src="../../images/Icon/notice.png"></image>
+                    <view class="service_name">我的通知</view>
+                </navigator>
+            </view>
+        </view>
+        <view class="other_wrap">
+            <view class="other_content">
+                <view class="other_item" bindtap="isIden">
+                    <view class="img_wrap">
+                        <image mode="widthFix" class="other_icon" src="../../images/Icon/cert.png"></image>
+                    </view>
+                    <view class="info_wrap">
+                        <view class="other_name">实名认证</view>
+                    </view>
+                    <view class="arrow">
+                        <image mode="widthFix" class="arrow_icon" src="../../images/Icon/arrow.png"></image>
+                    </view>
+                </view>
+                <view class="other_item" bindtap="isIden">
+                    <view class="img_wrap">
+                        <image mode="widthFix" class="other_icon" src="../../images/Icon/info.png"></image>
+                    </view>
+                    <view class="info_wrap">
+                        <view class="other_name">个人信息</view>
+                    </view>
+                    <view class="arrow">
+                        <image mode="widthFix" class="arrow_icon" src="../../images/Icon/arrow.png"></image>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
